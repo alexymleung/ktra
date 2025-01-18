@@ -1,14 +1,16 @@
 {% extends 'base.html' %} {% block title %} Profile {% endblock title %}
-{% block content %} {% if user_bookings %}
-<div class="container">
+{% block content %} 
+{% include 'partials/_alert.html' %}
+{% if user_bookings %}
+<div class="container" style="padding:100px;">
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">User</th>
-        <th scope="col">Service</th>
-        <th scope="col">Fee</th>
-        <th scope="col">Quota</th>
-        <th scope="col">Total Fee</th>
+        <th scope="col">使用者</th>
+        <th scope="col">服務</th>
+        <th scope="col">費用</th>
+        <th scope="col">已預約名額</th>
+        <th scope="col">總共費用</th>
       </tr>
     </thead>
     <tbody>

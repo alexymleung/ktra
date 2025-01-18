@@ -15,13 +15,13 @@ def register(request):
         password2 = request.POST['password2']
         if password == password2:
             if User.objects.filter(Q(username=username) & Q(email=email)).exists():
-                messages.error(request, 'Both username and email taken already, please try again')
+                messages.error(request, '使用者名稱及電郵均已使用')
                 return redirect('register')
             elif User.objects.filter(username=username).exists():
-                messages.error(request, 'Username taken already, please try again')
+                messages.error(request, '使用者名稱已經使用')
                 return redirect('register')
             elif User.objects.filter(email=email).exists():
-                messages.error(request, 'Email taken already, please try again')
+                messages.error(request, '電郵已經使用')
                 return redirect('register')
             else:
                 user = User.objects.create_user(
@@ -31,10 +31,10 @@ def register(request):
                     first_name=first_name, 
                     last_name=last_name) 
                 user.save()
-                messages.success(request, "Your registration is successful. Please proceed to log in")
+                messages.success(request, "你已成功登記")
                 return redirect('login')
         else:
-            messages.error(request, 'Passwords not matched')
+            messages.error(request, '密碼不相符')
             return redirect('register')
     else:
         return render(request, 'accounts/register.html')
@@ -46,10 +46,10 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            messages.success(request,"You have logged in")
+            messages.success(request,"你已成功登入")
             return redirect('profile')
         else:
-            messages.error(request,"Invalid credentials, please log in again")
+            messages.error(request,"錯誤輸入")
             return redirect('login')
     else:
         return render(request, 'accounts/login.html')
@@ -57,7 +57,7 @@ def login(request):
 def logout(request):
     if request.method == 'POST':
         auth.logout(request)
-        messages.success(request, 'You have logged out!')
+        messages.success(request, '你已成功登出')
     return redirect('index')
 
 def profile(request):

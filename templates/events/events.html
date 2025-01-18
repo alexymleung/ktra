@@ -3,109 +3,384 @@
 
 {% block title %} | {{ event_type|get_event_label }} {% endblock %} 
 {% block content %}
-<!-- Showcase Section -->
+
 <style>
-  #showcase-inner {
-    padding-top: 38px;    /* Adjust as needed for top padding */
-    padding-bottom: 30px; /* Adjust as needed for bottom padding */
+  /* Modern Card Design */
+  .card.listing-preview {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
+
+  .card.listing-preview:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Enhanced Title Styling */
+  .card-title {
+    padding: 1rem;
+    margin: 0;
+    background: linear-gradient(45deg, #F79880, #DFAF67, #F7B583);
+    color: white;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .card-title h4 {
+    margin: 0;
+    color: white !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Pagination Styling */
+  .pagination .page-item.active .page-link {
+    background-color: #6a11cb;
+    border-color: #6a11cb;
+  }
+
+  .pagination .page-link {
+    color: #6a11cb;
+  }
+
+  .pagination .page-link:hover {
+    background-color: #f7e7e3;
+    color: #6a11cb;
+  }
+
 </style>
 
-<section id="showcase-inner" class="text-white">
-  <div class="container">
-    <div class="row text-center">
-      <div class="col-md-12">
-        <h1 class="display-4">{{ event_type|get_event_label }}新聞</h1> <!-- Main heading for the showcase -->
+<script>
+let page = 1;
+const eventsContainer = document.getElementById('events');
+
+window.addEventListener('scroll', () => {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+    page++;
+    fetch(`/events/?page=${page}`)
+      .then(response => response.text())
+      .then(html => {
+        eventsContainer.insertAdjacentHTML('beforeend', html);
+      });
+  }
+});
+
+</script>
+
+
+<!-- Add this style block at the top of your file -->
+<style>
+  @keyframes textRise {
+    0% {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .rising-text {
+    animation: textRise 1.5s ease-out forwards;
+  }
+
+  /* Add this to hide the text initially */
+  .rising-text[style*="animation-delay"] {
+    opacity: 0;
+  }
+  
+  #showcase-inner.sunrise-effect {
+    /* position: relative;
+    overflow: hidden;
+    animation: sunrise 10s infinite; */
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+  }
+</style>
+  
+
+  <!-- showcase section -->
+  <section id="showcase-inner" class="text-white py-5 sunrise-effect">
+    <div class="sun"></div>
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-4 rising-text">{{ event_type|get_event_label }}新聞</h1>
+          <p class="lead rising-text" style="animation-delay: 0.5s;">最新動態與活動資訊</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+  
 
 
 <!-- Events Section -->
-<section id="events" class="py-4">
+<!-- <section id="events" class="py-5">
+  <div class="container"> -->
+    <!-- Filter and Sort Options -->
+    <!-- <div class="row mb-4">
+      <div class="col-md-6">
+        <select id="category-filter" class="form-control">
+          <option value="">所有分類</option>
+          <option value="news">新聞</option>
+          <option value="updates">更新</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <select id="sort-by" class="form-control">
+          <option value="date">按日期排序</option>
+          <option value="title">按標題排序</option>
+        </select>
+      </div>
+    </div> -->
+
+
+
+<style>
+  /* Add these new styles */
+  .events-carousel {
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  width: 100%;
+  visibility: visible;
+  }
+
+  .carousel-container {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.1s linear;
+    cursor: grab;
+    width: 100%;
+  }
+
+  .carousel-item {
+    min-width: 350px;
+    max-width: 350px;
+    flex: 0 0 auto;
+    display: block;
+  }
+  
+  .carousel-prev,
+  .carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: rgba(223, 175, 103, 0.85);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    color: white;
+    z-index: 10;
+    font-size: 24px;
+    font-weight: 300;
+  }
+
+  .carousel-prev:hover,
+  .carousel-next:hover {
+    background-color: rgba(223, 175, 103, 0.95);
+    border-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-50%) scale(1.05);
+  }
+
+  .carousel-prev::before,
+  .carousel-next::before {
+    display: none;
+  }
+
+  .carousel-prev {
+    left: 15px;
+  }
+
+  .carousel-next {
+    right: 15px;
+  }
+  </style>
+
+
+<!-- Replace the existing Events Grid with this -->
+<section id="events" class="py-5">
   <div class="container">
-    <div class="row">
-      {% if events %} 
-        {% for event in events %}
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card listing-preview">
-              {% if event.photo_main %}
-                <img class="card-img-top" src="{{ event.photo_main.url }}" alt="" />
-              {% endif %}
-              <div class="card-body">
-                <div class="listing-heading text-center">
-                  <h4 class="text-primary">{{ event.title|title }}</h4> <!-- Event title -->
-                </div>
-                <hr />
-                <div class="row text-secondary pb-2">
-                  <div class="col-12">
-                    <i class="fas fa-newspaper"></i> {{ event.content }} <!-- Event content -->
-                  </div>
-                </div>
-                <hr />
-                <div class="row text-secondary pb-2">
-                  <div class="col-12">
+    <div class="events-carousel">
+      <div class="carousel-nav carousel-prev">&lt;</div>
+      <div class="carousel-nav carousel-next">&gt;</div>
+      <div class="carousel-container">
 
+        {% if events %}
+          {% for event in events %}
+            <div class="carousel-item">
+              <div class="card listing-preview">
+                <div class="card-title">
+                  <h4>{{ event.title|title }}</h4>
+                </div>
+                {% if event.photo_main %}
+                  <img class="card-img-top" src="{{ event.photo_main.url }}" alt="{{ event.title }}" loading="lazy">
+                {% endif %}
+                <div class="card-body">
+                  <hr />
+                  <div class="row text-secondary pb-2">
+                    <div class="col-12">
+                      <i class="fas fa-newspaper"></i> {{ event.content|truncatechars:100 }}
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row text-secondary pb-2">
+                    <div class="col-12">
                       <i class="fas fa-clock"></i> {{ event.publish_date|chinese_date }}
-
+                    </div>
                   </div>
+                  <hr />
+                  <a href="{% url 'event_detail' event.id %}" class="btn btn-primary btn-block">詳細資訊</a>
                 </div>
-                <hr />
-                <a href="{% url 'event_detail' event.id %}" class="btn btn-primary btn-block">詳細資訊</a>
               </div>
             </div>
-          </div>
-        {% endfor %}
-      {% else %}
-        <div class="col-md-12">
-          <p>有關新聞暫時沒有</p> <!-- Message when no events are available -->
-        </div>
-      {% endif %}
-    </div>
-    
-    <!-- Pagination Section -->
-    <div class="row">
-      <div class="col-md-12">
-        {% if events.has_other_pages %}
-          <ul class="pagination">
-            {% if events.has_previous %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{events.previous_page_number}}">&laquo;</a>
-              </li>
-            {% else %}
-              <li class="page-item disabled">
-                <a class="page-link" href="#">&laquo;</a>
-              </li>
-            {% endif %} 
-            
-            {% for i in events.paginator.page_range %} 
-              {% if events.number == i %}
-                <li class="page-item">
-                  <a class="page-link active" style="background-color: #F7E7E3; border-color: #F7E7E3;">{{i}}</a>
-                </li>
-              {% else %}
-                <li class="page-item">
-                  <a class="page-link" href="?page={{i}}">{{i}}</a>
-                </li>
-              {% endif %} 
-            {% endfor %} 
-            
-            {% if events.has_next %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{events.next_page_number}}">&raquo;</a>
-              </li>
-            {% else %}
-              <li class="page-item disabled">
-                <a class="page-link" href="#">&raquo;</a>
-              </li>
-            {% endif %}
-          </ul>
+          {% endfor %}
         {% endif %}
       </div>
     </div>
   </div>
 </section>
 
-<div class="container" style="margin-top: 88px;"></div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.querySelector('.carousel-container');
+    const originalItems = Array.from(document.querySelectorAll('.carousel-item'));
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+    
+    // Clone items for infinite scroll (3 sets: before, original, after)
+    originalItems.forEach(item => {
+      const beforeClone = item.cloneNode(true);
+      container.insertBefore(beforeClone, container.firstChild);
+    });
+    
+    originalItems.forEach(item => {
+      const afterClone = item.cloneNode(true);
+      container.appendChild(afterClone);
+    });
+
+    const itemWidth = originalItems[0].offsetWidth + 20;
+    const singleSetWidth = originalItems.length * itemWidth;
+    let currentTranslate = -singleSetWidth;
+    let isAnimating = false;
+    let autoScrollInterval;
+    let direction = 1; // 1 for right, -1 for left
+    
+    // Initial position
+    container.style.transform = `translateX(${currentTranslate}px)`;
+
+    function moveCarousel(speed = 1) {
+      currentTranslate -= speed;
+      container.style.transform = `translateX(${currentTranslate}px)`;
+
+      // Check if we need to reset position
+      if (currentTranslate <= -(singleSetWidth * 2)) {
+        // Disable transition temporarily
+        container.style.transition = 'none';
+        currentTranslate += singleSetWidth;
+        container.style.transform = `translateX(${currentTranslate}px)`;
+        // Force reflow
+        container.offsetHeight;
+        // Re-enable transition
+        container.style.transition = 'transform 0.1s linear';
+      } else if (currentTranslate >= 0) {
+        // Disable transition temporarily
+        container.style.transition = 'none';
+        currentTranslate -= singleSetWidth;
+        container.style.transform = `translateX(${currentTranslate}px)`;
+        // Force reflow
+        container.offsetHeight;
+        // Re-enable transition
+        container.style.transition = 'transform 0.1s linear';
+      }
+    }
+
+    function startAutoScroll() {
+      if (autoScrollInterval) clearInterval(autoScrollInterval);
+      autoScrollInterval = setInterval(() => {
+        if (!isAnimating) {
+          moveCarousel(1 * direction);
+        }
+      }, 20);
+    }
+
+    // Button controls
+    prevBtn.addEventListener('mousedown', () => {
+      isAnimating = true;
+      direction = -1;
+      if (autoScrollInterval) clearInterval(autoScrollInterval);
+      autoScrollInterval = setInterval(() => moveCarousel(-2), 20);
+    });
+
+    nextBtn.addEventListener('mousedown', () => {
+      isAnimating = true;
+      direction = 1;
+      if (autoScrollInterval) clearInterval(autoScrollInterval);
+      autoScrollInterval = setInterval(() => moveCarousel(2), 20);
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isAnimating) {
+        isAnimating = false;
+        if (autoScrollInterval) clearInterval(autoScrollInterval);
+        startAutoScroll();
+      }
+    });
+
+    // Hover effects
+    prevBtn.addEventListener('mouseenter', () => {
+      if (!isAnimating) {
+        direction = -1;
+        if (autoScrollInterval) clearInterval(autoScrollInterval);
+        autoScrollInterval = setInterval(() => moveCarousel(-1), 20);
+      }
+    });
+
+    nextBtn.addEventListener('mouseenter', () => {
+      if (!isAnimating) {
+        direction = 1;
+        if (autoScrollInterval) clearInterval(autoScrollInterval);
+        autoScrollInterval = setInterval(() => moveCarousel(1), 20);
+      }
+    });
+
+    prevBtn.addEventListener('mouseleave', () => {
+      if (!isAnimating) {
+        direction = 1;
+        if (autoScrollInterval) clearInterval(autoScrollInterval);
+        startAutoScroll();
+      }
+    });
+
+    nextBtn.addEventListener('mouseleave', () => {
+      if (!isAnimating) {
+        direction = 1;
+        if (autoScrollInterval) clearInterval(autoScrollInterval);
+        startAutoScroll();
+      }
+    });
+
+    // Start auto-scroll
+    startAutoScroll();
+  });
+</script>
+
+<div class="row">
+  <div class="container1 col-md-6 col-sm-12"></div>
+  <div class="container1 col-md-6 col-sm-12"></div> 
+</div>
+
 {% endblock %}

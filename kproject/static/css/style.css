@@ -46,14 +46,19 @@ img {
     left: 0;
     min-height: 100%;
     width: 100%;
-    background: rgba(32, 134, 107, 0.8); }
+    /* background: rgba(32, 134, 107, 0.8);  */
+  }
 
 
 #showcase-inner {
   background: url(../img/building.jpg) no-repeat top center/ cover fixed;
   position: relative;
   overflow: hidden;
-  min-height: 92px; }
+  text-align: center;
+  padding-top: 25px;   
+  padding-bottom: 20px; 
+  /* min-height: 92px;  */
+}
   #showcase-inner::before {
     content: '';
     position: absolute;
@@ -73,6 +78,11 @@ img {
 
 .listing-preview a {
   position: relative; }
+
+/* Custom button styling */
+.btn {
+  font-size: 1.1rem !important;
+}
 
 @media (max-width: 991px) {
   #showcase {

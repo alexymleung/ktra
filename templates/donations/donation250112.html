@@ -1,0 +1,148 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block content %}
+
+<!-- Showcase Section -->
+<section id="showcase-inner" class="text-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>慷慨解囊</h1> <!-- Main heading for the showcase -->
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+
+<!--donation-->
+<div class="container">
+    <style>
+        .button-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .big-red-button {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 60px;
+            color: white;
+            background-image: linear-gradient(0deg, rgba(247, 181, 131, 1) 15%, rgba(247, 167, 106, 1) 30%, rgba(247, 153, 82, 1) 45%, rgba(247, 139, 57, 1) 55%, rgba(247, 125, 32, 1) 70%, rgba(247, 111, 8, 1) 85%, rgba(247, 106, 0, 1) 100%);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .big-red-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .section-title {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f7a76c;
+        }
+        .donation-section {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .donor-list {
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .donor-list p {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            margin: 0;
+        }
+    </style>
+
+    <!-- Hero Section -->
+    <div class="row">
+        <div class="col-12 text-center">
+            <div class="button-container">
+                <a href="https://forms.gle/xnnCJTQQe9axkn759" class="big-red-button">捐款</a>
+            </div>
+            <p class="lead" style="font-size: 1.5rem; margin-bottom: 40px;">
+                我們需要您的支持，為觀塘居民提供優質的社區服務！
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row">
+        <!-- Left Column -->
+        <div class="col-md-6">
+            <div class="donation-section">
+                <h2 class="section-title">捐款方式</h2>
+                <p>您的捐款將用於支持我們的服務，讓我們為社區提供更多元化的服務。</p>
+                <p>您可以通過以下方式捐款：</p>
+                <ul>
+                    <li><strong>網上捐款</strong></li>
+                    <li>
+                        <strong>銀行轉帳</strong>
+                        <ul>
+                            <li>銀行名稱：中國銀行</li>
+                            <li>戶口名稱：觀塘民聯會</li>
+                            <li>戶口號碼：012-123456-001</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>支票</strong>
+                        <ul>
+                            <li>支票抬頭：觀塘民聯會</li>
+                            <li>郵寄地址：九龍觀塘康寧道15號裕民大廈8字樓</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="donation-section">
+                <h2 class="section-title">物資捐贈</h2>
+                <p>我們也歡迎您捐贈物資，讓我們為社區提供更多服務。</p>
+                <p>您可以捐贈以下物資：</p>
+                <ul>
+                    <li>食物</li>
+                    <li>衣物</li>
+                    <li>書籍</li>
+                </ul>
+                <p>如您有意捐贈物資，請聯絡我們。</p>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-md-6">
+            <div class="donation-section">
+                <h2 class="section-title">鳴謝以下善長</h2>
+                <div class="donor-list" data-sheetdb-url="https://sheetdb.io/api/v1/y8i2v30t8ep4w" 
+                     data-sheetdb-limit="20">
+                    <p>{{ "善長姓名  Name" }} - {{ "Payable Total" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    var url = "https://sheetdb.io/api/v1/y8i2v30t8ep4w";
+    $.getJSON(url, function(data) {
+        var output = '';
+        $.each(data, function(index, value) {
+            output += '<p>' + value['善長姓名 Name'] + ' - ' + value['Payable Total'] + '</p>';
+        });
+        $('div[data-sheetdb-url]').html(output);
+    });
+});
+</script>
+
+<div class="container" style="margin-top: 88px;"></div>
+{% endblock content%}  

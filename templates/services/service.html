@@ -1,11 +1,7 @@
 {% extends "base.html" %} {% load ktra_filters %}{% block title %} | {{service_type | title}} {% endblock %} {% block content %}
+{% include 'partials/_alert.html' %}
 
-<!-- Showcase-inner -->
 <style>
-  #showcase-inner {
-    padding-top: 38px;    /* Adjust as needed for top padding */
-    padding-bottom: 30px; /* Adjust as needed for bottom padding */
-  }
   .box {
     box-sizing: border-box;
   }
@@ -144,11 +140,13 @@
   }
 </style>
 
+
+<!-- Showcase-inner -->
 <section id="showcase-inner" class="text-white">
-  <div class="container" >
-    <div class="row text-center">
+  <div class="container d-flex justify-content-center align-items-center" >
+    <div class="row">
       <div class="col-md-12">
-        <h1 class="display-4">{{ service.title | title }}</h1>
+        <h1 >{{ service.title | title }}</h1>
       </div>
     </div>
   </div>
@@ -226,6 +224,7 @@
       </section>
   
       <!-- Sign Up Modal -->
+       <div class="container">
       <div class="modal col" id="signUpModal" role="dialog" style="background-color:transparent;height:auto;padding:0;margin:0;">
         <div class="modal-dialog">
           <div class="modal-content" style="background-color:white;height:auto;">
@@ -247,7 +246,7 @@
                  <input type="hidden" name="service_id" value="{{ service.id }}" />
                 <div class="form-group">
                   <label for="service_title" class="col-form-label"
-                    >Service:</label
+                    >服務:</label
                   >
                   <input
                     type="text"
@@ -257,7 +256,7 @@
                     readonly
                     />
                   <label for="quota_require" class="col-form-label">
-                  Quota Require:
+                    名額:
                   </label>
                   <select class="form-control" id="service_quota" name="service_quota" onchange="totalFee()">
                     {% if has_remind %}
@@ -270,7 +269,7 @@
                   </select>
                   <br>
                   <label for="fee_amount" class="col-form-label">
-                  Fee:
+                    費用:
                   </label>
                   <input type="number" id="fee_amount" name="fee_amount" class="form-control" value="{{service.fee}}" readonly/>
                 </div>
@@ -311,7 +310,7 @@
           var selectedValue = selectElement.options[selectElement.selectedIndex].value;
           document.getElementById("fee_amount").value = selectedValue*{{service.fee}}; }
       </script>
-
+    </div>
 <section class="py-4">
   <div id="myModal" class="modal">
     <span class="close cursor" onclick="closeModal()">&times;</span>

@@ -1,0 +1,70 @@
+{% if messages %} {% for message in messages %}
+<style>
+  #message {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1051;
+  }
+  
+  .alert-animate-out {
+    animation: shrinkRotate 1.2s ease-in-out forwards;
+    transform-origin: center;
+  }
+  
+  @keyframes shrinkRotate {
+    0% {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    30% {
+      transform: scale(0.9) rotate(90deg);
+      opacity: 0.9;
+    }
+    60% {
+      transform: scale(0.5) rotate(180deg);
+      opacity: 0.7;
+    }
+    80% {
+      transform: scale(0.3) rotate(270deg);
+      opacity: 0.4;
+    }
+    100% {
+      transform: scale(0) rotate(360deg);
+      opacity: 0;
+    }
+  }
+</style>
+<div class="container" id="message">
+  <div
+    class="alert alert-{{ message.tags }} alert-dismissible text-center"
+    role="alert"
+  >
+    <button class="close" type="button" data-dismiss="alert">
+      <span aria-hidden="true"> &times; </span>
+    </button>
+    <strong>
+      {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} Error: {% else %}
+      {{ message.tags|title }} {% endif %}
+    </strong>
+    {{ message }}
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const alertElement = document.querySelector('.alert');
+    if (alertElement) {
+      setTimeout(function() {
+        alertElement.classList.add('alert-animate-out');
+        setTimeout(function() {
+          const messageContainer = document.getElementById('message');
+          if (messageContainer) {
+            messageContainer.remove();
+          }
+        }, 2800); // Wait for the full animation to complete
+      }, 3000); // Start animation after 1.8s
+    }
+  });
+</script>
+{% endfor %} {% endif %}

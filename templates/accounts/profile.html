@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% block title %} Profile {% endblock title %}
+{% block content %} {% if user_bookings %}
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">User</th>
+        <th scope="col">Service</th>
+        <th scope="col">Fee</th>
+        <th scope="col">Quota</th>
+        <th scope="col">Total Fee</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for b in user_bookings %}
+    <tr>
+      <th scope="row">{{ b.user__username }}</th>
+      <td>{{ b.service__title }}</td>
+      <td>{{ b.service__fee }}</td>
+      <td>{{ b.count }}</td>
+      <td>{{ b.total_fee }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+</div>
+{% else %}
+
+
+<h3 class = "text-center py-4">
+  您暫無預訂記錄
+</h3>
+{% endif %} {% endblock content %}

@@ -1,0 +1,96 @@
+#header {
+  height: 80px;
+  background-image: linear-gradient(180deg, rgba(255, 170, 157, 1) 35%, rgba(247, 181, 131, 1) 65%, rgba(216, 194, 121, 1) 100%);
+  /* background-color: #005140; */
+  color: #212529 !important;
+  font-size: 40px;
+}
+
+#branding h1 {
+  color: #212529;
+}
+
+a:link,
+a:visited {
+  color: #2c4262;
+}
+
+span.this-page {
+  background-color: #F7E7E3
+  ;
+}
+
+span.this-page a{
+  background-color: #F7B583;
+}
+
+span.this-page-active{
+  background-color: #F7B583;
+}
+
+span.this-page-hover{
+  background-color: #F7B583;
+}
+
+
+
+html[data-theme="light"], :root {
+  --primary: #F7B583; /* Change to your desired primary color */
+  --secondary: #F7D3CA; /* Change to your desired secondary color */
+}
+
+
+
+
+
+
+
+div.breadcrumbs {
+  /* background-color: #F7B583; */
+  background-image: linear-gradient(180deg, rgba(223, 175, 103, 1) 15%, rgba(223, 166, 81, 1) 35%, rgba(223, 157, 58, 1) 50%, rgba(223, 148, 36, 1) 65%, rgba(223, 139, 14, 1) 85%, rgba(223, 134, 0, 1) 100%); 
+  color: #2c4262;
+}
+
+div.breadcrumbs a {
+  /* background-color: #813E00; */
+  background-image: linear-gradient(-180deg, rgba(223, 166, 81, 1) 10%, rgba(223, 157, 58, 1) 50%, rgba(223, 148, 36, 1) 80%);
+   color: #333;
+}
+
+.module h2,
+.module caption,
+.inlinegroup h2 {
+  /* background-color: #DFAF67; */
+  background-image: linear-gradient(0deg, rgba(247, 153, 82, 1) 20%, rgba(247, 139, 57, 1) 35%, rgba(247, 125, 32, 1) 50%, rgba(247, 111, 8, 1) 75%, rgba(247, 106, 0, 1) 100%); 
+  /* background-image: linear-gradient(0deg, rgba(247, 181, 131, 1) 15%, rgba(247, 167, 106, 1) 30%, rgba(247, 153, 82, 1) 45%, rgba(247, 139, 57, 1) 55%, rgba(247, 125, 32, 1) 70%, rgba(247, 111, 8, 1) 85%, rgba(247, 106, 0, 1) 100%); */
+  color: #2c4262 !important;
+}
+
+.button,
+input[type="submit"],
+input[type="button"],
+.submitrow input,
+a.button {
+  background: #F7B583;
+  color: #212529;
+}
+
+#user-tools>a {
+  color : #212529 !important;
+}
+
+#logout-forms button {
+  color : #212529 !important;
+}
+
+#button {
+  color : #212529 !important;
+}
+
+button {
+  color : #212529 !important;
+}
+
+.button {
+  color : #212529 !important;
+}

@@ -1,0 +1,202 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<style>
+  body {
+    height: 2700px;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+  }
+
+  #changeElement {
+    position: absolute;
+    top: 650px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: top 0.5s ease, left 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #circle {
+    background-color: lightcoral;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    display: inline-block;
+    transition: transform 0.3s, background-color 0.3s;
+  }
+
+  #circle:hover {
+    transform: scale(1.3);
+    background-color: coral;
+  }
+
+  #leftBorder, #rightBorder {
+    width: 0px;
+    border-top: 1px solid black;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  #leftText, #rightText {
+    opacity: 0;
+    transition: opacity 1s, transform 0.5s;
+    transform: translateY(20px);
+    font-size: 17.6px;
+    line-height: 1.5;
+    max-width: 330px;
+    padding: 11px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+  }
+
+  .text-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  .fade-in {
+    animation: fadeIn 1s forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .slide-in {
+    animation: slideIn 1s forwards;
+  }
+
+  @keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+  }
+</style>
+
+<div>
+  <a id="top"></a>
+  <div style="text-align: center">
+    <img
+      src="{% static 'img/logo.png' %}"
+      style="width: 330px; height: 330px"
+    />
+    <p style="font-size: 110%;">
+      觀塘民聯會於1974年創立，<br />
+      1999年獲批准註冊為非牟利慈善團體，<br />
+      四十多年來秉承｢同舟共濟 守望相助 ｣ 的創會精神，<br />
+      扎根基層，服務社區，關心社會。<br />
+      本會堅持與時並進，腳踏實地為居民提供多元化社會服務，<br />
+      服務範疇涵蓋幼兒服務、青少年服務、長者服務、新來港人士服務等。<br />
+      積極開展以青少年、婦女及長者等為主題的各種活動，推動國民及公民教育活動；<br />
+      持和參與社會公益事務；同時也十分關注與居民息息相關的民生及社會問題，<br />
+      為建設和諧社區貢獻力量。
+    </p>
+  </div>
+  <div id="changeElement">
+    <div id="leftBorder"><div id="leftText"></div><img id="leftImage" src=""></div>
+    <div id="circle"><a id="circleHref" href="#"></a></div>
+    <div id="rightBorder"><div id="rightText"></div><img id="rightImage" src=""></div>
+  </div>
+</div>
+
+<script>
+  window.addEventListener("scroll", function () {
+    const changeElement = document.getElementById("changeElement");
+    const circle = document.getElementById("circle");
+    const leftText = document.getElementById("leftText");
+    const leftBorder = document.getElementById("leftBorder");
+    const rightText = document.getElementById("rightText");
+    const rightBorder = document.getElementById("rightBorder");
+    const circleHref = document.getElementById("circleHref");
+    const leftImage = document.getElementById("leftImage");
+    const rightImage = document.getElementById("rightImage");
+    const scrollY = window.scrollY;
+
+    if (scrollY > 1600) {
+      rightImage.src = "";
+      leftImage.src = "";
+      circleHref.href = "#top";
+      circleHref.innerHTML = "Top";
+      rightBorder.style.width = "0px";
+      leftBorder.style.width = "330px";
+      leftText.classList.add('text-visible', 'fade-in');
+      rightText.classList.remove('text-visible');
+      changeElement.style.left = "50%";
+      changeElement.style.top = "1900px";
+      leftText.innerHTML = "1974 - Establishment: 觀塘民聯會 was founded with the mission of providing mutual aid and support to the community.";
+      rightText.innerHTML = "";
+    } else if (scrollY > 1400) {
+      rightImage.src = "";
+      leftImage.src = "{% static 'img/about/4.png' %}";
+      circleHref.href = "";
+      circleHref.innerHTML = "";
+      rightBorder.style.width = "330px";
+      leftBorder.style.width = "550px";
+      leftText.classList.remove('text-visible');
+      rightText.classList.add('text-visible', 'slide-in');
+      changeElement.style.left = "50%";
+      changeElement.style.top = "1700px";
+      leftText.innerHTML = "";
+      rightText.innerHTML = "1999 - Non-Profit Status: The association was registered as a non-profit charitable organization.";
+    } else if (scrollY > 1000) {
+      rightImage.src = "{% static 'img/about/3.jpg' %}";
+      leftImage.src = "";
+      circleHref.href = "";
+      circleHref.innerHTML = "";
+      rightBorder.style.width = "550px";
+      leftBorder.style.width = "330px";
+      leftText.classList.add('text-visible', 'fade-in');
+      rightText.classList.remove('text-visible');
+      changeElement.style.left = "50%";
+      changeElement.style.top = "1300px";
+      leftText.innerHTML = "2000s - Expansion of Services: The association expanded its services to include childcare, youth services, elderly services, and support for new immigrants.";
+      rightText.innerHTML = "";
+    } else if (scrollY > 600) {
+      rightImage.src = "";
+      leftImage.src = "{% static 'img/about/2.jpg' %}";
+      circleHref.href = "";
+      circleHref.innerHTML = "";
+      rightBorder.style.width = "330px";
+      leftBorder.style.width = "550px";
+      leftText.classList.remove('text-visible');
+      rightText.classList.add('text-visible', 'slide-in');
+      changeElement.style.left = "50%";
+      changeElement.style.top = "900px";
+      leftText.innerHTML = "";
+      rightText.innerHTML = "2010s - Community Engagement: The association actively engaged in various community activities, promoting national and civic education, supporting social welfare activities, and addressing residents' livelihood and social issues.";
+    } else if (scrollY > 250) {
+      rightImage.src = "{% static 'img/about/1.jpg' %}";
+      leftImage.src = "";
+      circleHref.href = "";
+      circleHref.innerHTML = "";
+      leftBorder.style.width = "330px";
+      rightBorder.style.width = "550px";
+      leftText.classList.add('text-visible', 'fade-in');
+      rightText.classList.remove('text-visible');
+      changeElement.style.left = "50%";
+      changeElement.style.top = "650px";
+      leftText.innerHTML = "2024 - 50th Anniversary: 觀塘民聯會 celebrated its 50th anniversary with a series of events, including a song competition, health seminars, and community visits. The anniversary activities aimed to foster a harmonious community and provide services to those in need.";
+      rightText.innerHTML = "";
+    } else {
+      rightImage.src = "";
+      leftImage.src = "";
+      circleHref.href = "";
+      circleHref.innerHTML = "";
+      leftBorder.style.width = "0px";
+      rightBorder.style.width = "0px";
+      leftText.classList.remove('text-visible');
+      rightText.classList.remove('text-visible');
+      changeElement.style.left = "50%";
+      changeElement.style.top = "650px";
+      leftText.innerHTML = "";
+      rightText.innerHTML = "";
+    }
+  });
+</script>
+{% endblock content %}

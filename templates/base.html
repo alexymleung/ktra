@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+
+    <!-- Google Fonts -->
+    <!-- Google Fonts Noto Sans TC -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      /* Apply Noto Sans TC to all Chinese text */
+      :lang(zh-Hant) {
+        font-family: 'Noto Sans TC', sans-serif;
+      }
+  
+      /* Optional: Apply a fallback font for non-Chinese text */
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .noto-sans-tc-medium {
+        font-family: 'Noto Sans TC', sans-serif;
+        font-weight: 550;
+        font-style: normal;
+      }
+  
+      .noto-sans-tc-bold {
+        font-family: 'Noto Sans TC', sans-serif;
+        font-weight: 700;
+        font-style: normal;
+      }
+    </style>
+
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href={% static "css/all.css" %} />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href={% static "css/bootstrap.css" %} />
+    <!-- Custom -->
+    <link rel="stylesheet" href={% static "css/style.css" %} />
+    <!-- lightbox -->
+    <link rel="stylesheet" href={% static "css/lightbox.min.css" %} />
+    <!-- icon -->
+    <link rel="icon" type="image/x-icon" sizes="16x16" href={% static 'img/favicon.ico' %} />
+    <!-- simple slideshow -->
+    <link rel="stylesheet" href={% static "css/slideshow.css" %} />
+
+    <title>觀塘民聯會 {% block title %} {% endblock title %}</title>
+  </head>
+
+  <body>
+
+    {% include 'partials/_navbar.html' %}
+    {% block content %}    {% endblock %}
+    {% include 'partials/_footer.html' %}
+
+
+    <!-- lightbox -->
+    <script src={% static "js/lightbox.min.js" %}></script> 
+    <!-- jQuery -->
+    <script src={% static "js/jquery-3.3.1.min.js" %}></script>
+    <script src={% static "js/bootstrap.bundle.min.js" %}></script>
+    <script src={% static "js/main.js" %}></script>
+    <!-- Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <!-- simple slide show -->
+    <script src={% static "js/better-simple-slideshow.js" %}></script>
+    <script src={% static "js/better-simple-slideshow.min.js" %}></script>
+    <!-- for swipe support on touch interfaces -->
+    <script src={% static "js/hammer.js" %}></script> 
+  </body>
+</html>

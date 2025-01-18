@@ -1,0 +1,115 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+
+
+<!-- Slideshow container -->
+<div class="slideshow-container">
+  <!-- Banner slides -->
+  <div class="mySlides fade">
+    <img src="{% static 'img/banner/banner1wb.jpg' %}" alt="觀塘民聯會50周年">
+    <h4 class="figcaption">觀塘民聯會50周年</h4>
+  </div>
+  <div class="mySlides fade">
+    <img src="{% static 'img/banner/banner2wb.jpg' %}" alt="樂動@觀塘-歌唱比賽2024">
+    <h4 class="figcaption">樂動@觀塘-歌唱比賽2024</h4>
+  </div>
+  <div class="mySlides fade">
+    <img src="{% static 'img/banner/banner3wb.jpg' %}" alt="觀塘民聯會50周年">
+    <h4 class="figcaption">賀建黨百年 慶香港回歸</h4>
+  </div>
+  <div class="mySlides fade">
+    <img src="{% static 'img/banner/banner4wb.jpg' %}" alt="樂動@觀塘-歌唱比賽2024">
+    <h4 class="figcaption">新春行大運暨籌募會務經費啟動禮</h4>
+  </div>
+  <div class="mySlides fade">
+    <img src="{% static 'img/banner/banner5wb.jpg' %}" alt="觀塘民聯會50周年">
+    <h4 class="figcaption">「秀親情•鄰舍關護」計劃啟動禮</h4>
+  </div>
+  <div class="mySlides fade">
+    <img src="{% static 'img/banner/banner6wb.jpg' %}" alt="樂動@觀塘-歌唱比賽2024">
+    <h4 class="figcaption">觀塘民聯會翠屏互助幼兒中心暨課餘托管中心</h4>
+  </div>
+  <a class="prev" onclick="plusSlides(-1)">❮</a>
+  <a class="next" onclick="plusSlides(1)">❯</a>
+</div>
+
+<!-- The dots -->
+<div class="dots-container">
+  <span class="dot" onclick="currentSlide(1)"></span> 
+  <span class="dot" onclick="currentSlide(2)"></span> 
+  <span class="dot" onclick="currentSlide(3)"></span> 
+  <span class="dot" onclick="currentSlide(4)"></span> 
+  <span class="dot" onclick="currentSlide(5)"></span> 
+  <span class="dot" onclick="currentSlide(6)"></span> 
+</div>
+
+
+<!-- Javascript for slideshows -->
+
+<script>
+let slideIndex = 1;
+let timeoutHandle;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  clearTimeout(timeoutHandle);
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  clearTimeout(timeoutHandle);
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  
+  for (let i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  
+  // Auto advance slides
+  timeoutHandle = setTimeout(() => plusSlides(1), 5000);
+}
+</script> 
+
+
+
+<!-- Latest Events Section -->
+<div class="events-section mb-0 bg-primary03">
+  <h2 class="section-title text-center bg-primary07 !important">最新消息</h2>
+  <div class="events-container align-middle">
+    {% if events %}
+      {% for event in events %}
+      <a class="event-card" href="{% url 'event_detail' event.id %}">
+        <div class="event-content">
+          <div class="event-image">
+            <img src="{{ event.photo_main.url }}" alt="{{ event.title }}">
+          </div>
+          <div class="event-details">
+            <h4>{{ event.title }}</h4>
+            <p class="event-date">{{ event.date|date:"Y-m-d" }}</p>
+            <p class="event-description">{{ event.content }}</p>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    {% else %}
+      <p class="text-center align-middle no-events">暫時沒有最新消息</p>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container" style="margin-top: 114px;"></div>
+{% endblock content %}

@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block branding %}
+
+<h1 id="head">
+    <img 
+    src={% static 'img/logo.png' %} 
+    alt="觀塘民聯會"
+    class = 'brand_img' 
+    height= "80" 
+    width = "80"
+    /> Administration Section
+</h1>
+
+{% endblock %}
+<!-- add css -->
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}" />
+{% endblock %}

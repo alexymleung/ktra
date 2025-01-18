@@ -1,0 +1,486 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+{% include 'partials/_alert.html' %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contemporary Index Page</title>
+    <link rel="stylesheet" href="styles.css">
+
+<style>
+  /* General Styles */
+  body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      line-height: 1.6;
+  }
+
+  
+
+  /* Hero Section */
+  .hero {
+      background: url({% static "img/background/00_465045-Kwun-Tong-Promenade.avif" %}) no-repeat center center/cover;
+      background-size: cover;
+      background-position: center bottom;
+      height: 83vh;
+      position: relative;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+  }
+
+  .hero-content {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      text-align: center;
+  }
+
+  .hero-content h1 {
+      font-size: 4rem;
+      margin-bottom: 0.5%;
+  }
+
+  .hero-content p {
+      font-size: 1.5rem;
+      margin-bottom: 1%;
+  }
+
+  .cta-button {
+      display: inline-block;
+      margin-top: 0%;
+      padding: 1rem 2rem;
+      background: #ff6f61;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      transition: background 0.3s ease;
+  }
+
+  .cta-button:hover {
+      background: #ff4a3d;
+  }
+
+  /* Gallery Section */
+  .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+  }
+
+  .gallery-item {
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      cursor: pointer;
+      height: 300px;
+      background: #f8f9fa;
+      transition: transform 0.3s ease;
+  }
+
+  .gallery-item:hover {
+      transform: translateY(-5px);
+  }
+
+  .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+  }
+
+  .gallery-item:hover img {
+      transform: scale(1.05);
+  }
+
+  .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+  }
+
+  .lightbox.active {
+      display: flex;
+      opacity: 1;
+  }
+
+  .lightbox-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90vh;
+  }
+
+  .lightbox-image {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+  }
+
+  .lightbox-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 10px;
+  }
+
+  .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+  }
+
+  .lightbox-nav button {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: white;
+      padding: 15px 20px;
+      cursor: pointer;
+      border-radius: 50%;
+      font-size: 20px;
+      transition: background 0.3s ease;
+  }
+
+  .lightbox-nav button:hover {
+      background: rgba(255, 255, 255, 0.2);
+  }
+
+  @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+  }
+
+  .lightbox.active {
+      animation: fadeIn 0.3s ease forwards;
+  }
+
+  /* Footer */
+  footer {
+      text-align: center;
+      padding: 1rem;
+      background: #333;
+      color: #fff;
+  }
+
+  /* Latest Events Section */
+  .events-section {
+      padding: 5rem 0;
+      background: #ffffff;
+      position: relative;
+      overflow: hidden;
+  }
+
+  .section-title {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 4rem;
+      text-align: center;
+      color: #333;
+      position: relative;
+      letter-spacing: 0.5px;
+  }
+
+  .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 3px;
+      background: #ff6f61;
+      border-radius: 2px;
+  }
+
+  .events-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+      padding: 0 2rem;
+  }
+
+  .event-card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      animation: cardAppear 0.5s ease forwards;
+      animation-delay: calc(var(--card-index) * 0.1s);
+      opacity: 0;
+  }
+
+  @keyframes cardAppear {
+      from {
+          opacity: 0;
+          transform: translateY(20px);
+      }
+      to {
+          opacity: 1;
+          transform: translateY(0);
+      }
+  }
+
+  .event-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+
+  .event-content {
+      display: flex;
+      flex-direction: column;
+  }
+
+  .event-image {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+  }
+
+  .event-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+  }
+
+  .event-card:hover .event-image img {
+      transform: scale(1.05);
+  }
+
+  .event-details {
+      padding: 1.5rem;
+      position: relative;
+  }
+
+  .event-category {
+      position: absolute;
+      top: -12px;
+      right: 1.5rem;
+      background: #ff6f61;
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      box-shadow: 0 2px 5px rgba(255,111,97,0.3);
+  }
+
+  .event-details h4 {
+      font-size: 1.4rem;
+      margin: 0.5rem 0 0.5rem 0;
+      color: #333;
+      font-weight: 600;
+      transition: color 0.3s ease;
+  }
+
+  .event-card:hover .event-details h4 {
+      color: #ff6f61;
+  }
+
+  .event-date {
+      font-size: 0.9rem;
+      color: #ff6f61;
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+  }
+
+  .event-description {
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+  }
+
+  .read-more {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 0;
+      color: #ff6f61;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+  }
+
+  .read-more::after {
+      content: '→';
+      margin-left: 0.5rem;
+      transition: transform 0.3s ease;
+      display: inline-block;
+  }
+
+  .event-card:hover .read-more::after {
+      transform: translateX(5px);
+  }
+
+  .no-events {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      font-size: 1.2rem;
+      color: #666;
+      background: rgba(255,255,255,0.8);
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+</style>
+
+</head>
+
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>歡迎來到觀塘民聯會 </h1>
+            <p>探索我們精心策劃美麗的世界</p>
+            <a href="#explore" class="cta-button">探索更多</a>
+        </div>
+    </header>
+
+    <section id="explore" class="gallery">
+        <div class="gallery-item">
+            <img src={% static "img/background/03_465050-Kwun-Tong-Promenade.webp" %} alt="Photo 1">
+            <div class="overlay">
+                <h3>照片 1</h3>
+                <p>觀塘海濱長廊1</p>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src={% static "img/background/01_464426-Kwun-Tong.avif" %} alt="Photo 2">
+                   <div class="overlay">
+                <h3>照片 2</h3>
+                <p>觀塘海濱長廊2</p>
+            </div>
+        </div>
+        <div class="gallery-item">  
+          <img src={% static "img/background/02_465042-Kwun-Tong-Promenade.avif" %} alt="Photo 3">
+            <div class="overlay">
+                <h3>照片 3</h3>
+                <p>觀塘海濱長廊3</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="lightbox">
+        <div class="lightbox-content">
+            <img class="lightbox-image" src="" alt="">
+            <button class="lightbox-close">&times;</button>
+            <div class="lightbox-nav">
+                <button class="lightbox-prev">&lt;</button>
+                <button class="lightbox-next">&gt;</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+  // script.js
+  // Add any interactive elements if needed
+  document.addEventListener('DOMContentLoaded', function() {
+      // Example: Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+              e.preventDefault();
+              document.querySelector(this.getAttribute('href')).scrollIntoView({
+                  behavior: 'smooth'
+              });
+          });
+      });
+
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      const lightbox = document.querySelector('.lightbox');
+      const lightboxImage = document.querySelector('.lightbox-image');
+      const lightboxClose = document.querySelector('.lightbox-close');
+      const lightboxPrev = document.querySelector('.lightbox-prev');
+      const lightboxNext = document.querySelector('.lightbox-next');
+
+      let currentImageIndex = 0;
+
+      galleryItems.forEach((item, index) => {
+          item.addEventListener('click', () => {
+              currentImageIndex = index;
+              lightboxImage.src = item.querySelector('img').src;
+              lightbox.classList.add('active');
+          });
+      });
+
+      lightboxClose.addEventListener('click', () => {
+          lightbox.classList.remove('active');
+      });
+
+      lightboxPrev.addEventListener('click', () => {
+          currentImageIndex = (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
+          lightboxImage.src = galleryItems[currentImageIndex].querySelector('img').src;
+      });
+
+      lightboxNext.addEventListener('click', () => {
+          currentImageIndex = (currentImageIndex + 1) % galleryItems.length;
+          lightboxImage.src = galleryItems[currentImageIndex].querySelector('img').src;
+      });
+  });
+
+</script>
+
+
+
+<!-- Latest Events Section -->
+<div class="events-section mb-0 bg-primary03">
+  <h3 class="section-title text-center bg-primary07 !important">最新消息</h3>
+  <div class="events-container align-middle">
+    {% if events %}
+      {% for event in events %}
+      <a class="event-card" href="{% url 'event_detail' event.id %}" style="--card-index: {{ forloop.counter0 }}">
+        <div class="event-content">
+          <div class="event-image">
+            <img src="{{ event.photo_main.url }}" alt="{{ event.title }}">
+          </div>
+          <div class="event-details">
+            <span class="event-category">{{ event.category }}</span>
+            <h4>{{ event.title }}</h4>
+            <p class="event-date">{{ event.date|date:"Y-m-d" }}</p>
+            <p class="event-description">{{ event.content }}</p>
+            <p class="read-more">閱讀更多</p>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    {% else %}
+      <p class="text-center align-middle no-events">暫時沒有最新消息</p>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container" style="margin-top: 80px; background-color: rgba(247, 186, 171, 1);"></div>
+{% endblock content %}

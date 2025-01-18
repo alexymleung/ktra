@@ -25,6 +25,7 @@ from django.conf.urls import handler404, handler500
 urlpatterns = [
     path('',include('pages.urls')),
     path('',include('accounts.urls')),
+    path('accounts/', include('allauth.urls')),
     path('',include('bookings.urls')),
     path('services/',include('services.urls')),
     path('events/',include('events.urls')),

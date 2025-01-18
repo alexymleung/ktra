@@ -1,89 +1,612 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 
 {% include 'partials/_alert.html' %}
-<!-- Slideshow container -->
-<div class="slideshow-container">
-  <!-- Banner slides -->
-  <div class="mySlides fade">
-    <img src="{% static 'img/banner/banner1wb.jpg' %}" alt="觀塘民聯會50周年">
-    <h4 class="figcaption">觀塘民聯會50周年</h4>
-  </div>
-  <div class="mySlides fade">
-    <img src="{% static 'img/banner/banner2wb.jpg' %}" alt="樂動@觀塘-歌唱比賽2024">
-    <h4 class="figcaption">樂動@觀塘-歌唱比賽2024</h4>
-  </div>
-  <div class="mySlides fade">
-    <img src="{% static 'img/banner/banner3wb.jpg' %}" alt="觀塘民聯會50周年">
-    <h4 class="figcaption">賀建黨百年 慶香港回歸</h4>
-  </div>
-  <div class="mySlides fade">
-    <img src="{% static 'img/banner/banner4wb.jpg' %}" alt="樂動@觀塘-歌唱比賽2024">
-    <h4 class="figcaption">新春行大運暨籌募會務經費啟動禮</h4>
-  </div>
-  <div class="mySlides fade">
-    <img src="{% static 'img/banner/banner5wb.jpg' %}" alt="觀塘民聯會50周年">
-    <h4 class="figcaption">「秀親情•鄰舍關護」計劃啟動禮</h4>
-  </div>
-  <div class="mySlides fade">
-    <img src="{% static 'img/banner/banner6wb.jpg' %}" alt="樂動@觀塘-歌唱比賽2024">
-    <h4 class="figcaption">觀塘民聯會翠屏互助幼兒中心暨課餘托管中心</h4>
-  </div>
-  <a class="prev" onclick="plusSlides(-1)">❮</a>
-  <a class="next" onclick="plusSlides(1)">❯</a>
-</div>
-
-<!-- The dots -->
-<div class="dots-container">
-  <span class="dot" onclick="currentSlide(1)"></span> 
-  <span class="dot" onclick="currentSlide(2)"></span> 
-  <span class="dot" onclick="currentSlide(3)"></span> 
-  <span class="dot" onclick="currentSlide(4)"></span> 
-  <span class="dot" onclick="currentSlide(5)"></span> 
-  <span class="dot" onclick="currentSlide(6)"></span> 
-</div>
 
 
-<!-- Javascript for slideshows -->
+<head>
+
+<style>
+  /* General Styles */
+  body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      line-height: 1.6;
+  }
+
+
+  /* Hero Section */
+  .hero {
+      {% if hero_image %}background: url("{{ hero_image.img.url }}") no-repeat center center/cover;{% endif %}
+      background-size: cover;
+      background-position: center bottom;
+      height: 83vh;
+      position: relative;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+  }
+
+  .hero-content {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      text-align: center;
+  }
+
+  .hero-content h1 {
+      font-size: 4rem;
+      margin-bottom: 0.5%;
+  }
+
+  .hero-content p {
+      font-size: 1.5rem;
+      margin-bottom: 1%;
+  }
+
+  .cta-button {
+      display: inline-block;
+      margin-top: 0%;
+      padding: 1rem 2rem;
+      background: #ff6f61;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      transition: background 0.3s ease;
+  }
+
+  .cta-button:hover {
+      background: #ff4a3d;
+  }
+
+  /* Photo Gallery and Lightbox */
+  .photo-gallery {
+      padding: 2rem 0;
+      background: #ffffff;
+      overflow-x: hidden;
+  }
+
+  .gallery {
+      display: flex;
+      gap: 1.5rem;
+      padding: 2rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  .gallery::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+  }
+
+  .gallery-item {
+      flex: 0 0 300px;
+      scroll-snap-align: start;
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      cursor: pointer;
+      height: 400px;
+      background: #f8f9fa;
+      transition: transform 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .gallery-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+  }
+
+  .gallery-item:hover img {
+      transform: scale(1.05);
+  }
+
+  /* Scroll Buttons */
+  .gallery-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #333;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      z-index: 10;
+  }
+
+  .gallery-nav:hover {
+      background: white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .gallery-nav.prev {
+      left: 20px;
+  }
+
+  .gallery-nav.next {
+      right: 20px;
+  }
+
+  .gallery-container {
+      position: relative;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 60px;
+  }
+
+  /* Latest Events Section */
+  .events-section {
+      padding: 5rem 0;
+      background: #ffffff;
+      position: relative;
+      overflow: hidden;
+  }
+
+  .section-title {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 4rem;
+      text-align: center;
+      color: #333;
+      position: relative;
+      letter-spacing: 0.5px;
+  }
+
+  .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 3px;
+      background: #ff6f61;
+      border-radius: 2px;
+  }
+
+  .events-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+      padding: 0 2rem;
+  }
+
+  .event-card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      animation: cardAppear 0.5s ease forwards;
+      animation-delay: calc(var(--card-index) * 0.1s);
+      opacity: 0;
+  }
+
+  @keyframes cardAppear {
+      from {
+          opacity: 0;
+          transform: translateY(20px);
+      }
+      to {
+          opacity: 1;
+          transform: translateY(0);
+      }
+  }
+
+  .event-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+
+  .event-content {
+      display: flex;
+      flex-direction: column;
+  }
+
+  .event-image {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+  }
+
+  .event-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+  }
+
+  .event-card:hover .event-image img {
+      transform: scale(1.05);
+  }
+
+  .event-details {
+      padding: 1.5rem;
+      position: relative;
+  }
+
+  .event-category {
+      position: absolute;
+      top: -12px;
+      right: 1.5rem;
+      background: #ff6f61;
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      box-shadow: 0 2px 5px rgba(255,111,97,0.3);
+  }
+
+  .event-details h4 {
+      font-size: 1.4rem;
+      margin: 0.5rem 0 0.5rem 0;
+      color: #333;
+      font-weight: 600;
+      transition: color 0.3s ease;
+  }
+
+  .event-card:hover .event-details h4 {
+      color: #ff6f61;
+  }
+
+  .event-date {
+      font-size: 0.9rem;
+      color: #ff6f61;
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+  }
+
+  .event-description {
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+  }
+
+  .read-more {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 0;
+      color: #ff6f61;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+  }
+
+  .read-more::after {
+      content: '→';
+      margin-left: 0.5rem;
+      transition: transform 0.3s ease;
+      display: inline-block;
+  }
+
+  .event-card:hover .read-more::after {
+      transform: translateX(5px);
+  }
+
+  .no-events {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      font-size: 1.2rem;
+      color: #666;
+      background: rgba(255,255,255,0.8);
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+
+  /* Lightbox Styles */
+  .photo-lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+  }
+
+  .photo-lightbox.active {
+      display: flex;
+      opacity: 1;
+  }
+
+  .photo-lightbox-content {
+      position: relative;
+      width: 90vw;
+      height: 90vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .photo-lightbox-image {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      border-radius: 5px;
+  }
+
+  .photo-lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 40px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 10px;
+      z-index: 10000;
+      transition: all 0.3s ease;
+      opacity: 0.8;
+  }
+
+  .photo-lightbox-close:hover {
+      transform: scale(1.1);
+      opacity: 1;
+  }
+
+  .photo-lightbox-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 30px;
+      pointer-events: none;
+      z-index: 10000;
+  }
+
+  .photo-lightbox-nav button {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      pointer-events: auto;
+      opacity: 0.8;
+  }
+
+  .photo-lightbox-nav button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+      opacity: 1;
+  }
+
+  .photo-lightbox-counter {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 16px;
+      opacity: 0.8;
+      z-index: 10000;
+  }
+
+  @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+  }
+
+  .photo-lightbox.active {
+      animation: fadeIn 0.3s ease forwards;
+  }
+
+  /* Prevent body scroll when lightbox is open */
+  body.lightbox-open {
+      overflow: hidden;
+  }
+</style>
+
+</head>
+
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>歡迎來到觀塘民聯會 </h1>
+            <a href="#explore" class="cta-button">探索更多</a>
+        </div>
+    </header>
+
+    <section id="explore" class="photo-gallery">
+        <div class="gallery-container">
+            <button class="gallery-nav prev">&#10094;</button>
+            <div class="gallery">
+                {% if imageset %}
+                {% for i in imageset %}
+                <div class="gallery-item" data-src="{{ i.img.url }}">
+                    <img src="{{ i.img.url }}" alt="{{ i.name }}">
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <button class="gallery-nav next">&#10095;</button>
+        </div>
+    </section>
+
+    <!-- Photo Lightbox -->
+    <div class="photo-lightbox">
+        <div class="photo-lightbox-content">
+            <img class="photo-lightbox-image" src="" alt="">
+            <button class="photo-lightbox-close">&times;</button>
+            <div class="photo-lightbox-nav">
+                <button class="photo-lightbox-prev">&lt;</button>
+                <button class="photo-lightbox-next">&gt;</button>
+            </div>
+            <div class="photo-lightbox-counter"></div>
+        </div>
+    </div>
 
 <script>
-let slideIndex = 1;
-let timeoutHandle;
-showSlides(slideIndex);
+    // Isolated lightbox functionality
+    (function() {
+        // Gallery scroll functionality
+        const gallery = document.querySelector('.gallery');
+        const prevBtn = document.querySelector('.gallery-nav.prev');
+        const nextBtn = document.querySelector('.gallery-nav.next');
+        const scrollAmount = 400; // Adjust this value to control scroll distance
 
-function plusSlides(n) {
-  clearTimeout(timeoutHandle);
-  showSlides(slideIndex += n);
-}
+        prevBtn.addEventListener('click', () => {
+            gallery.scrollBy({
+                left: -scrollAmount,
+                behavior: 'smooth'
+            });
+        });
 
-function currentSlide(n) {
-  clearTimeout(timeoutHandle);
-  showSlides(slideIndex = n);
-}
+        nextBtn.addEventListener('click', () => {
+            gallery.scrollBy({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+        });
 
-function showSlides(n) {
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
-  
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  
-  for (let i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  
-  for (let i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " active";
-  
-  // Auto advance slides
-  timeoutHandle = setTimeout(() => plusSlides(1), 5000);
-}
-</script> 
+        // Show/hide navigation buttons based on scroll position
+        gallery.addEventListener('scroll', () => {
+            prevBtn.style.opacity = gallery.scrollLeft > 0 ? '1' : '0.5';
+            nextBtn.style.opacity = 
+                gallery.scrollLeft < (gallery.scrollWidth - gallery.clientWidth) ? '1' : '0.5';
+        });
 
+        // Initialize button states
+        prevBtn.style.opacity = '0.5';
+        
+        // Lightbox functionality
+        const photoGallery = {
+            init: function() {
+                this.galleryItems = document.querySelectorAll('.gallery-item');
+                this.lightbox = document.querySelector('.photo-lightbox');
+                this.lightboxImage = document.querySelector('.photo-lightbox-image');
+                this.closeBtn = document.querySelector('.photo-lightbox-close');
+                this.prevBtn = document.querySelector('.photo-lightbox-prev');
+                this.nextBtn = document.querySelector('.photo-lightbox-next');
+                this.counter = document.querySelector('.photo-lightbox-counter');
+                this.currentIndex = 0;
+                
+                this.bindEvents();
+                this.updateCounter();
+            },
 
+            bindEvents: function() {
+                // Bind click events for gallery items
+                this.galleryItems.forEach((item, index) => {
+                    item.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.currentIndex = index;
+                        this.openLightbox(item.dataset.src);
+                    });
+                });
+
+                // Bind lightbox controls
+                this.closeBtn.addEventListener('click', () => this.closeLightbox());
+                this.prevBtn.addEventListener('click', () => this.showPrevImage());
+                this.nextBtn.addEventListener('click', () => this.showNextImage());
+
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (!this.lightbox.classList.contains('active')) return;
+                    
+                    switch(e.key) {
+                        case 'Escape':
+                            this.closeLightbox();
+                            break;
+                        case 'ArrowLeft':
+                            this.showPrevImage();
+                            break;
+                        case 'ArrowRight':
+                            this.showNextImage();
+                            break;
+                    }
+                });
+
+                // Handle clicks outside the image to close
+                this.lightbox.addEventListener('click', (e) => {
+                    if (e.target === this.lightbox) {
+                        this.closeLightbox();
+                    }
+                });
+            },
+
+            openLightbox: function(src) {
+                this.lightboxImage.src = src;
+                this.lightbox.classList.add('active');
+                document.body.classList.add('lightbox-open');
+                this.updateCounter();
+            },
+
+            closeLightbox: function() {
+                this.lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+            },
+
+            showPrevImage: function() {
+                this.currentIndex = (this.currentIndex - 1 + this.galleryItems.length) % this.galleryItems.length;
+                this.lightboxImage.src = this.galleryItems[this.currentIndex].dataset.src;
+                this.updateCounter();
+            },
+
+            showNextImage: function() {
+                this.currentIndex = (this.currentIndex + 1) % this.galleryItems.length;
+                this.lightboxImage.src = this.galleryItems[this.currentIndex].dataset.src;
+                this.updateCounter();
+            },
+
+            updateCounter: function() {
+                this.counter.textContent = `${this.currentIndex + 1} / ${this.galleryItems.length}`;
+            }
+        };
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            photoGallery.init();
+        });
+    })();
+</script>
 
 <!-- Latest Events Section -->
 <div class="events-section mb-0 bg-primary03">
@@ -91,15 +614,17 @@ function showSlides(n) {
   <div class="events-container align-middle">
     {% if events %}
       {% for event in events %}
-      <a class="event-card" href="{% url 'event_detail' event.id %}">
+      <a class="event-card" href="{% url 'event_detail' event.id %}" style="--card-index: {{ forloop.counter0 }}">
         <div class="event-content">
           <div class="event-image">
             <img src="{{ event.photo_main.url }}" alt="{{ event.title }}">
           </div>
           <div class="event-details">
+            <span class="event-category">{{ event.category }}</span>
             <h4>{{ event.title }}</h4>
             <p class="event-date">{{ event.date|date:"Y-m-d" }}</p>
             <p class="event-description">{{ event.content }}</p>
+            <p class="read-more">閱讀更多</p>
           </div>
         </div>
       </a>

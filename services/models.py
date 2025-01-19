@@ -5,8 +5,10 @@ from PIL import Image
 
 class Service(models.Model):
     title = models.CharField(max_length=100)
-    service_type = models.CharField(max_length=50,choices=service_type_choices.items())
+    service_type = models.CharField(max_length=50,choices=service_type_choices)
     description = models.TextField(blank=True)
+    location = models.CharField(max_length=100)
+    instructor = models.CharField(max_length=50, blank=True)
     service_date = models.DateField(default=timezone.now)
     service_start_time = models.DateTimeField(default=timezone.now)
     service_end_time = models.DateTimeField(default=timezone.now)

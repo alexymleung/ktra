@@ -5,6 +5,5 @@ urlpatterns = [
     path('register', views.register, name='register'),
     path('login', views.login, name='login'),
     path('logout', views.logout, name='logout'),
-    path('profile',views.profile,name='profile'),
-    path('login/google/', views.google_login_redirect, name='google_login_redirect'),
+    path('profile',views.profile,name='profile')
 ]

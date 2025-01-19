@@ -25,14 +25,12 @@ from django.conf.urls import handler404, handler500
 urlpatterns = [
     path('',include('pages.urls')),
     path('',include('accounts.urls')),
-    path('accounts/', include('allauth.urls')),
     path('',include('bookings.urls')),
-    path('services/',include('services.urls')),
     path('events/',include('events.urls')),
+    path('services/',include('services.urls')),
     path('',include('donations.urls')),
     path('admin/', admin.site.urls),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
-
 
 handler404 = 'pages.views.custom_404'
 handler500 = 'pages.views.custom_500'

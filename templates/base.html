@@ -79,3 +79,25 @@
     <!-- <script src={% static "js/hammer.js" %}></script>  -->
   </body>
 </html>
+
+<script>
+document.getElementById('standardFont').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.body.style.fontSize = '1rem';
+    localStorage.setItem('fontSize', 'standard');
+});
+
+document.getElementById('largeFont').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.body.style.fontSize = '1.2rem';
+    localStorage.setItem('fontSize', 'large');
+});
+
+// Check stored preference on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const storedSize = localStorage.getItem('fontSize');
+    if (storedSize === 'large') {
+        document.body.style.fontSize = '1.2rem';
+    }
+});
+</script>

@@ -4,7 +4,6 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from bookings.models import Booking
 from django.db.models import Count, F, Sum
-from allauth.socialaccount.providers.google.views import OAuth2LoginView
 
 def register(request):
     if request.method == "POST":
@@ -79,5 +78,4 @@ def profile(request):
     else:
         return redirect("login")
 
-def google_login_redirect(request):
-    return redirect(OAuth2LoginView.adapter_view(provider='google'))
+

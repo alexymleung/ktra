@@ -1,6 +1,5 @@
 {% extends 'base.html' %} 
-{% load static %}
-{% load socialaccount %}
+{% load static %} 
 {% block title %} 
 Login
 {% endblock title %} 
@@ -48,7 +47,6 @@ Login
                 value="登入"
                 class="btn btn-secondary btn-block"
               />
-              <a href="{% provider_login_url "google" method="oauth2" %}" class="btn btn-google">Login with Google</a>
             </form>
           </div>
         </div>

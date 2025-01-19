@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'ec2-54-79-214-217.ap-southeast-2.compute.amazonaws.com',
+    'ktra.mooo.com',
+    '192.168.195.11',
     '127.0.0.1',
     'localhost',
 ]
@@ -45,15 +47,8 @@ INSTALLED_APPS = [
     'events.apps.EventsConfig',
     'services.apps.ServicesConfig',
     'pages.apps.PagesConfig',
-    'bookings.apps.BookingsConfig',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
+    'bookings.apps.BookingsConfig'
 ]
-
-SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -63,7 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware'
+    'kproject.middleware.AutoLogoutMiddleware',
 ]
 
 ROOT_URLCONF = 'kproject.urls'
@@ -157,24 +152,3 @@ MEDIA_URL ='/media/'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
-
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-)
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'APP': {
-            'client_id': '664696037688-17e7q7rb221cbdbknkv428dqe5g6iod5.apps.googleusercontent.com',
-            'secret': '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',
-            'key': ''
-        }
-    }
-}
-
-# settings.py
-LOGIN_REDIRECT_URL = 'http://localhost:8000/'
-
-CART_SESSION_ID = 'cart'
-

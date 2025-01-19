@@ -119,6 +119,71 @@
   }
 </style>
 
+<!-- detail descriptions style -->
+<style>
+  .service-details-card {
+    border: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    border-radius: 16px;
+    transition: transform 0.3s ease;
+  }
+  
+  .service-details-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .service-description {
+    line-height: 1.6;
+    color: #4a4a4a;
+  }
+  
+  .gradient-hr {
+    height: 3px;
+    background: linear-gradient(to right, #F79880, #DFAF67);
+    border: none;
+    border-radius: 2px;
+  }
+  
+  .detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    padding: 12px;
+    background: #fff9f8;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .detail-item:hover {
+    background: #fef4eb;
+  }
+  
+  .detail-icon {
+    color: #F79880;
+    font-size: 1.2rem;
+    margin-right: 12px;
+  }
+  
+  .detail-label {
+    color: #666;
+    flex: 1;
+  }
+  
+  .detail-value {
+    color: #DFAF67;
+    font-weight: 500;
+  }
+  
+  .card-title {
+    background: linear-gradient(45deg, #F79880, #F7B583);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.5rem;
+  }
+</style>
+  
+  
+
 <!-- Showcase -->
 <section id="showcase-inner" class="text-white">
   <div class="container">
@@ -134,66 +199,79 @@
   <div class="container">
     <a href="{% url 'services' service.service_type %}" class="btn btn-light mb-4">返回服務</a>
 
-    <!-- Photo Gallery -->
-    <div class="container mb-4">
-      <div class="slideshow-container">
-        {% if service.photo_1 %}
-        <div class="slide active" onclick="openModal();currentSlide(1)">
-          <img src="{{ service.photo_1.url }}" alt="Photo 1">
-        </div>
-        {% endif %}
-        {% if service.photo_2 %}
-        <div class="slide" onclick="openModal();currentSlide(2)">
-          <img src="{{ service.photo_2.url }}" alt="Photo 2">
-        </div>
-        {% endif %}
-        {% if service.photo_3 %}
-        <div class="slide" onclick="openModal();currentSlide(3)">
-          <img src="{{ service.photo_3.url }}" alt="Photo 3">
-        </div>
-        {% endif %}
-        {% if service.photo_4 %}
-        <div class="slide" onclick="openModal();currentSlide(4)">
-          <img src="{{ service.photo_4.url }}" alt="Photo 4">
-        </div>
-        {% endif %}
-        
-        <div class="slide-nav slide-prev" onclick="changeSlide(-1)">&lt;</div>
-        <div class="slide-nav slide-next" onclick="changeSlide(1)">&gt;</div>
-        <div class="slide-counter"><span id="currentSlideNum">1</span> / <span id="totalSlides">4</span></div>
-      </div>
-    </div>
 
-    <!-- Description, Date, and Enrollment -->
-    <div class="row mb-5 pb-5">
-      <div class="col-md-12 d-flex justify-content-center">
-        <div class="card" style="width: 60%;">
-          <div class="card-body">
-            <h5 class="card-title mb-3">服務詳情</h5>
-            <div class="content-text mb-4">
-              {{ service.description }}
+    <div class="d-flex flex-column flex-lg-row gap-4">
+
+      <!-- Details and Enrolment -->
+      <div class="col-lg-5 col-sm-12 mb-5 mr-3 pb-5">
+        <div class="d-flex justify-content-center">
+          <div class="card w-100 service-details-card">
+            <div class="card-body">
+              <h5 class="card-title mb-4 fw-bold">活動詳情</h5>
+              <div class="content-text mb-4 service-description">
+                {{ service.description }}
+              </div>
+              <hr class="gradient-hr">
+              <div class="detail-item">
+                <i class="fas fa-calendar detail-icon"></i>
+                <span class="detail-label">舉辦日期:</span>
+                <span class="detail-value">{{ service.service_date|chinese_date }}</span>
+              </div>
+              <div class="detail-item">
+                <i class="fa-solid fa-location-dot detail-icon"></i>
+                <span class="detail-label">舉辦地點:</span>
+                <span class="detail-value">{{service.location}}</span>
+              </div>
+              <div class="detail-item">
+                <i class="fa-solid fa-chalkboard-user detail-icon"></i>
+                <span class="detail-label">導師:</span>
+                <span class="detail-value">{{service.instructor }}</span>
+              </div>
+
+              {% if user.is_authenticated %}
+              <button type="button" class="enroll-button mt-4" data-toggle="modal" data-target="#signUpModal">
+                立即報名
+              </button>
+              {% endif %}
             </div>
-            <hr>
-            <div class="text-secondary mb-3">
-              <i class="fas fa-calendar"></i> 舉辦日期:
-              <span class="float-right">{{ service.service_date|chinese_date }}</span>
-            </div>
-            {% if user.is_authenticated %}
-            <button type="button" class="enroll-button" data-toggle="modal" data-target="#signUpModal">
-              立即報名
-            </button>
-<<<<<<< HEAD
-=======
-            {% else %}
-            <a class="enroll-button" href="{% url 'login' %}" onclick="alert('請登入')">
-              立即報名
-            </a>            
->>>>>>> 22b937a (3rd commit)
-            {% endif %}
           </div>
         </div>
       </div>
-    </div>
+
+      <!-- Photo Gallery -->
+      <div class="col-lg-7 col-sm-12 mb-4">
+        <div class="slideshow-container">
+          {% if service.photo_1 %}
+          <div class="slide active" onclick="openModal();currentSlide(1)">
+            <img src="{{ service.photo_1.url }}" alt="Photo 1">
+          </div>
+          {% endif %}
+          {% if service.photo_2 %}
+          <div class="slide" onclick="openModal();currentSlide(2)">
+            <img src="{{ service.photo_2.url }}" alt="Photo 2">
+          </div>
+          {% endif %}
+          {% if service.photo_3 %}
+          <div class="slide" onclick="openModal();currentSlide(3)">
+            <img src="{{ service.photo_3.url }}" alt="Photo 3">
+          </div>
+          {% endif %}
+          {% if service.photo_4 %}
+          <div class="slide" onclick="openModal();currentSlide(4)">
+            <img src="{{ service.photo_4.url }}" alt="Photo 4">
+          </div>
+          {% endif %}
+          
+          <div class="slide-nav slide-prev" onclick="changeSlide(-1)"><</div>
+          <div class="slide-nav slide-next" onclick="changeSlide(1)">></div>
+          <div class="slide-counter"><span id="currentSlideNum">1</span> / <span id="totalSlides">4</span></div>
+        </div>
+      </div>
+
+
+
+
+    
     <!-- Extra padding div -->
     <div class="pb-4"></div>
   </div>
@@ -284,7 +362,9 @@
     function totalFee() { 
       var selectElement = document.getElementById("service_quota");
       var selectedValue = selectElement.options[selectElement.selectedIndex].value;
-      document.getElementById("fee_amount").value = selectedValue*{{service.fee}}; }
+      var fee = parseFloat("{{ service.fee }}");
+      document.getElementById("fee_amount").value = selectedValue * fee;
+    }
   </script>
 </div>
 

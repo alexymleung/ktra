@@ -4,6 +4,7 @@
 {% block title %} | 新聞搜尋 {% endblock %}
 {% block content %}
 
+<!-- Modern Card Design -->
 <style>
     /* Modern Card Design */
     .card.listing-preview {
@@ -36,77 +37,57 @@
       color: white !important;
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
     }
-  
-    /* Pagination Styling */
-    .pagination .page-item.active .page-link {
-      background-color: #6a11cb;
-      border-color: #6a11cb;
+</style>
+
+<!-- Inner showcase Improvement Styles -->
+<style>
+  #showcase-inner {
+    position: relative;
+    padding: 3rem 0;
+    background: linear-gradient(135deg, #F79880 0%, #DFAF67 50%, #F7B583 100%);
+    overflow: hidden;
+  }
+
+  #showcase-inner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  #showcase-inner .display-4 {
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    margin-bottom: 1rem;
+  }
+
+  #showcase-inner .lead {
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    letter-spacing: 1px;
+  }
+
+  .rising-text {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
-  
-    .pagination .page-link {
-      color: #6a11cb;
-    }
-  
-    .pagination .page-link:hover {
-      background-color: #f7e7e3;
-      color: #6a11cb;
-    }
-  
-    .search-button {
-        background-color: transparent;  /* Make the background transparent */
-        border: none;                   /* Remove default border */
-        padding: 0;                     /* Remove default padding */
-        cursor: pointer;                /* Change cursor to pointer */
-    }
-    
-    .search-icon {
-        width: 30px;                    /* Set width of the search icon */
-        height: 40px;                   /* Set height of the search icon */
-        transition: transform 0.3s;    /* Add transition for scaling effect */
-    }
-    
-    .search-button:hover .search-icon {
-        transform: scale(1.2);          /* Scale the icon on hover */
-    }
-    
-    /* Optional: Add a simple animation */
-    @keyframes pulse {
-        0% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.1);
-        }
-        100% {
-            transform: scale(1);
-        }
-    }
-    
-    .search-button:focus .search-icon {
-        animation: pulse 1s infinite;  /* Add pulse animation on focus */
-    }
-  </style>
-  
-  <script>
-  let page = 1;
-  const eventsContainer = document.getElementById('events');
-  
-  window.addEventListener('scroll', () => {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-      page++;
-      fetch(`/events/?page=${page}`)
-        .then(response => response.text())
-        .then(html => {
-          eventsContainer.insertAdjacentHTML('beforeend', html);
-        });
-    }
-  });
-  
-  </script>
-  
-  
-  <!-- Add this style block at the top of your file -->
-  <style>
+  }
+</style>
+
+<!-- Inner showcase Sunrise effect -->
+<style>
     @keyframes textRise {
       0% {
         transform: translateY(50px);
@@ -127,77 +108,11 @@
       opacity: 0;
     }
     
-    #showcase-inner.sunrise-effect {
-      /* position: relative;
-      overflow: hidden;
-      animation: sunrise 10s infinite; */
-      background: linear-gradient(to right, #6a11cb, #2575fc);
-    }
-  </style>
 
-<!-- Search section -->
-<section id="search_form">  
-    <div class="container text-center">
-      <div class="event-search p-3">
-        <div class="search">
-          <form action="{% url 'e-search' %}" method="GET">
-            <div class="form-row">
-              <div class="col-md-3 mb-2">
-                <label class="sr-only">內容</label>
-                <input
-                  type="text"
-                  name="keywords"
-                  class="form-control"
-                  placeholder="內容 (音樂, 瑜珈, etc)"
-                  value= "{{ values.keywords }}"
-                />
-              </div>
-              <div class="col-md-2 mb-2">
-                <label class="sr-only">title</label>
-                <input
-                  type="text"
-                  name="title"
-                  class="form-control"
-                  placeholder="標題"
-                  value="{{ values.title }}"
-                />
-              </div>
-              <div class="col-md-2 mb-2">
-                  <label class="sr-only">event_type</label>
-                  <select name="event_type" class="form-control">
-                    <option selected="true" disabled="disabled">
-                      類型(全部)
-                    </option>
-                    {% for key,value in event_type_choices %}
-                    <option value='{{ key }}' {% if values.event_type == key %} selected {% endif %}>{{ value }}</option>
-                  {% endfor %}
-                  </select>
-              </div>
-              <div class="col-md-2 mb-2">
-                  <label class="sr-only">publish_date</label>
-                  <select name="publish_date" class="form-control">
-                    <option selected="true" disabled="disabled">
-                      發布日期(全部)
-                    </option>
-                    {% for key,value in publish_date_choices %}
-                    <option value='{{ key }}' {% if values.publish_date == key %} selected {% endif %}>{{ value }}</option>
-                  {% endfor %}
-                  </select>
-              </div>
-              <div class="col-md-1 mb-2">
-                <button class="btn btn-primary btn-block search-button" type="submit">
-                    <img src="{% static 'img/search.svg' %}" alt="Search" class="search-icon" />
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
+</style>
 
-  <!-- showcase section -->
-  <section id="showcase-inner" class="text-white py-5 sunrise-effect">
+<!-- showcase section -->
+<section id="showcase-inner" class="text-white py-5 sunrise-effect">
     <div class="sun"></div>
     <div class="container">
       <div class="row text-center">
@@ -207,32 +122,183 @@
         </div>
       </div>
     </div>
-  </section>
+</section>
+
+<!-- Search Button Styles -->
+<style>
+
+  .search-button {
+      background-color: transparent;  /* Make the background transparent */
+      border: none;                   /* Remove default border */
+      padding: 0;                     /* Remove default padding */
+      cursor: pointer;                /* Change cursor to pointer */
+  }
   
+  .search-icon {
+      width: 30px;                    /* Set width of the search icon */
+      height: 40px;                   /* Set height of the search icon */
+      transition: transform 0.3s;    /* Add transition for scaling effect */
+  }
+  
+  .search-button:hover .search-icon {
+      transform: scale(1.2);          /* Scale the icon on hover */
+  }
+  
+  /* Optional: Add a simple animation */
+  @keyframes pulse {
+      0% {
+          transform: scale(1);
+      }
+      50% {
+          transform: scale(1.1);
+      }
+      100% {
+          transform: scale(1);
+      }
+  }
+  
+  .search-button:focus .search-icon {
+      animation: pulse 1s infinite;  /* Add pulse animation on focus */
+  }
+</style>
+
+<!-- Search Styles -->
+<style>
+  /* Enhanced Search Section */
+  #search_form {
+    padding: 2rem 0;
+    background: linear-gradient(45deg, #f7e7e3, #fff);
+  }
+
+  #search_form .event-search {
+    display: flex;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: transparent; !important; /* Make the box transparent */
+  }
+
+  #search_form .search {
+    width: 100%;
+  }
+
+  #search_form .form-row {
+    justify-content: center;
+    gap: 15px;
+  }
+
+  #search_form .form-control {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 2px 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+  }
+
+  #search_form .form-control:focus {
+    border-color: #DFAF67;
+    box-shadow: 0 0 0 0.2rem rgba(223,175,103,0.25);
+  }
+
+  #search_form select.form-control {
+    cursor: pointer;
+    /* background-image: linear-gradient(45deg, #fff, #f8f9fa); */
+  }
+
+  .search-button {
+    height: 100%;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 16px !important;
+    background: linear-gradient(45deg, #F79880, #DFAF67);
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+    transform: scale(1);  /* Makes button 20% smaller */
+
+}
+
+.search-icon {
+    width: 22px;
+    height: 28px;
+    transition: transform 0.3s;
+    margin: 0px;  /* Adds small padding between icon and button edge */
+}
 
 
-<!-- Events Section -->
-<!-- <section id="events" class="py-5">
-  <div class="container"> -->
-    <!-- Filter and Sort Options -->
-    <!-- <div class="row mb-4">
-      <div class="col-md-6">
-        <select id="category-filter" class="form-control">
-          <option value="">所有分類</option>
-          <option value="news">新聞</option>
-          <option value="updates">更新</option>
-        </select>
+  .search-button:hover {
+    transform: translateY(-2px);
+  }
+</style>
+
+<!-- Search section -->
+<section id="search_form">  
+  <div class="container text-center">
+    <div class="event-search p-3">
+      <div class="search">
+        <form action="{% url 'e-search' %}" method="GET">
+          <div class="form-row">
+            <div class="col-md-3 mb-2">
+              <label class="sr-only">內容</label>
+              <input
+                type="text"
+                name="keywords"
+                class="form-control"
+                placeholder="內容 (音樂, 瑜珈, etc)"
+                value= "{{ values.keywords }}"
+              />
+            </div>
+            <div class="col-md-2 mb-2">
+              <label class="sr-only">title</label>
+              <input
+                type="text"
+                name="title"
+                class="form-control"
+                placeholder="標題"
+                value="{{ values.title }}"
+              />
+            </div>
+            <div class="col-md-2 mb-2">
+                <label class="sr-only">event_type</label>
+                <select name="event_type" class="form-control">
+                  <option selected="true" disabled="disabled">
+                    類型(全部)
+                  </option>
+                  {% for key,value in event_type_choices %}
+                  <option value='{{ key }}' {% if values.event_type == key %} selected {% endif %}>{{ value }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2 mb-2">
+                <label class="sr-only">publish_date</label>
+                <select name="publish_date" class="form-control">
+                  <option selected="true" disabled="disabled">
+                    發布日期(全部)
+                  </option>
+                  {% for key,value in publish_date_choices %}
+                  <option value='{{ key }}' {% if values.publish_date == key %} selected {% endif %}>{{ value }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-1 mb-2">
+              <button class="btn btn-primary btn-block search-button" type="submit">
+                  <img src="{% static 'img/search.svg' %}" alt="Search" class="search-icon" />
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="col-md-6">
-        <select id="sort-by" class="form-control">
-          <option value="date">按日期排序</option>
-          <option value="title">按標題排序</option>
-        </select>
-      </div>
-    </div> -->
+    </div>
+  </div>
+</section>
 
 
 
+<!-- Events Carousel Styling -->
 <style>
   /* Add these new styles */
   .events-carousel {
@@ -300,10 +366,9 @@
   .carousel-next {
     right: 15px;
   }
-  </style>
+</style>
 
-
-<!-- Replace the existing Events Grid with this -->
+<!-- Events Carousel Section -->
 <section id="events" class="py-5">
   <div class="container">
     <div class="events-carousel">
@@ -346,7 +411,7 @@
   </div>
 </section>
 
-
+<!-- Script for Infinite Carousel -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const container = document.querySelector('.carousel-container');
@@ -471,6 +536,8 @@
   });
 </script>
 
+
+<!-- Bottom Spacer -->
 <div class="row">
   <div class="container1 col-md-6 col-sm-12"></div>
   <div class="container1 col-md-6 col-sm-12"></div> 

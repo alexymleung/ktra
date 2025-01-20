@@ -1,14 +1,55 @@
 {% extends "base.html" %} {% load ktra_filters %}{% block title %} | {{service_type | title}} {% endblock %} {% block content %}
 {% include 'partials/_alert.html' %}
 
+<!-- Inner showcase Improvement Styles -->
 <style>
-  /* Showcase Section Styling */
   #showcase-inner {
-    background: linear-gradient(to right, #6a11cb, #2575fc);
-    color: white;
-    padding: 3rem 0;
+    position: relative;
+    padding: 1rem 0;
+    background: linear-gradient(135deg, #F79880 0%, #DFAF67 50%, #F7B583 100%);
+    overflow: hidden;
   }
 
+  #showcase-inner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  #showcase-inner .display-5 {
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    margin-bottom: 1rem;
+  }
+
+  #showcase-inner .lead {
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    letter-spacing: 1px;
+  }
+
+  .rising-text {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<!-- Inner showcase Sunrise effect -->
+<style>
   @keyframes textRise {
     0% {
       transform: translateY(50px);
@@ -19,108 +60,67 @@
       opacity: 1;
     }
   }
-
+  
   .rising-text {
-    animation: textRise 1s ease-out forwards;
+    animation: textRise 1.5s ease-out forwards;
   }
 
-  .slideshow-container {
-    position: relative;
-    max-width: 800px;
-    margin: auto;
-    margin-bottom: 40px;
+  /* Add this to hide the text initially */
+  .rising-text[style*="animation-delay"] {
+    opacity: 0;
   }
+  
 
-  .slide {
-    display: none;
-    width: 100%;
-    height: 500px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
+  .search-button {
+    background-color: transparent;  /* Make the background transparent */
+    border: none;                   /* Remove default border */
+    padding: 4px;                     /* Remove default padding */
+    cursor: pointer;                /* Change cursor to pointer */
+}
 
-  .slide.active {
-    display: block;
-    animation: fadeIn 0.5s ease-in-out;
-  }
+.search-icon {
+    width: 21px;                    /* Set width of the search icon */
+    height: 28px;                   /* Set height of the search icon */
+    transition: transform 0.3s;    /* Add transition for scaling effect */
+}
 
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+.search-button:hover .search-icon {
+    transform: scale(1.2);          /* Scale the icon on hover */
+}
 
-  .slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    cursor: pointer;
-  }
+/* Optional: Add a simple animation */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
 
-  .slide-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 50px;
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    font-size: 24px;
-    transition: all 0.3s ease;
-  }
-
-  .slide-nav:hover {
-    background: rgba(0, 0, 0, 0.8);
-    transform: translateY(-50%) scale(1.1);
-  }
-
-  .slide-prev {
-    left: -25px;
-  }
-
-  .slide-next {
-    right: -25px;
-  }
-
-  .slide-counter {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 14px;
-  }
-
-  .enroll-button {
-    background: linear-gradient(45deg, #F79880, #DFAF67);
-    color: white;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 25px;
-    font-weight: bold;
-    transition: transform 0.3s, box-shadow 0.3s;
-    margin-top: 20px;
-    width: 100%;
-  }
-
-  .enroll-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    color: white;
-  }
+.search-button:focus .search-icon {
+    animation: pulse 1s infinite;  /* Add pulse animation on focus */
+}
 </style>
 
+<!-- Showcase Section -->
+<section id="showcase-inner" class="text-white py-5">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h1 class="display-5 rising-text">{{ service.title | title }}</h1>
+        <!-- <p class="lead rising-text" style="animation-delay: 0.5s;">我們的專業服務</p> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- detail descriptions style -->
-<style>
+<!-- <style>
   .service-details-card {
     border: none;
     box-shadow: 0 8px 24px rgba(0,0,0,0.1);
@@ -180,21 +180,9 @@
     -webkit-text-fill-color: transparent;
     font-size: 1.5rem;
   }
-</style>
-  
-  
+</style> -->
 
-<!-- Showcase -->
-<section id="showcase-inner" class="text-white">
-  <div class="container">
-    <div class="row text-center">
-      <div class="col-md-12">
-        <h1 class="rising-text">{{ service.title | title }}</h1>
-      </div>
-    </div>
-  </div>
-</section>
-
+<!-- Service Details -->
 <section id="service" class="py-4">
   <div class="container">
     <a href="{% url 'services' service.service_type %}" class="btn btn-light mb-4">返回服務</a>
@@ -227,11 +215,14 @@
                 <span class="detail-label">導師:</span>
                 <span class="detail-value">{{service.instructor }}</span>
               </div>
-
               {% if user.is_authenticated %}
               <button type="button" class="enroll-button mt-4" data-toggle="modal" data-target="#signUpModal">
                 立即報名
               </button>
+              {% else %}
+              <a type="button" class="enroll-button mt-4" href="{% url 'login' %}">
+                立即報名
+              </a>
               {% endif %}
             </div>
           </div>
@@ -429,6 +420,7 @@
   </div>
 </div>
 
+<!-- Modal Script-->
 <script>
   let currentIndex = 0;
   const slides = document.querySelectorAll('.slide');

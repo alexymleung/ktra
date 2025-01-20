@@ -1,7 +1,8 @@
-{% extends 'base.html' %}
+<!-- templates/events/events.html -->
+{% extends 'base.html' %} 
 {% load static %}
 {% load ktra_filters %}
-{% block title %} | {{service_type | get_service_label}} {% endblock %}
+{% block title %} | {{ event_type|get_event_label }} {% endblock %} 
 {% block content %}
 
 <!-- Modern Card Design -->
@@ -37,6 +38,22 @@
     color: white !important;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
   }
+
+  /* Pagination Styling */
+  .pagination .page-item.active .page-link {
+    background-color: #6a11cb;
+    border-color: #6a11cb;
+  }
+
+  .pagination .page-link {
+    color: #6a11cb;
+  }
+
+  .pagination .page-link:hover {
+    background-color: #f7e7e3;
+    color: #6a11cb;
+  }
+
 </style>
 
 <!-- Inner showcase Improvement Styles -->
@@ -150,18 +167,19 @@
 }
 </style>
 
-
-<!-- Showcase Section -->
-<section id="showcase-inner" class="text-white py-5">
-  <div class="container">
-    <div class="row text-center">
-      <div class="col-md-12">
-        <h1 class="display-4 rising-text">{{ service_type|get_event_label }}服務</h1>
-        <p class="lead rising-text" style="animation-delay: 0.5s;">我們的專業服務</p>
+<!-- showcase section -->
+<section id="showcase-inner" class="text-white py-5 sunrise-effect">
+    <div class="sun"></div>
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-4 rising-text">{{ event_type|get_event_label }}新聞</h1>
+          <p class="lead rising-text" style="animation-delay: 0.5s;">最新動態與活動資訊</p>
+        </div>
       </div>
     </div>
-  </div>
 </section>
+
 
 <!-- Search Styles -->
 <style>
@@ -171,7 +189,7 @@
     background: linear-gradient(45deg, #f7e7e3, #fff);
   }
 
-  #search_form .service-search {
+  #search_form .event-search {
     display: flex;
     justify-content: center;
     max-width: 1200px;
@@ -191,7 +209,7 @@
   #search_form .form-control {
     border-radius: 8px;
     border: 1px solid #ddd;
-    padding: 10px 15px;
+    padding: 2px 15px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     transition: all 0.3s ease;
   }
@@ -236,17 +254,12 @@
   }
 </style>
 
-
-
-
-
-
 <!-- Search section -->
 <section id="search_form">  
   <div class="container text-center">
-    <div class="service-search p-3">
+    <div class="event-search p-3">
       <div class="search">
-        <form action="{% url 's-search' %}" method="GET">
+        <form action="{% url 'e-search' %}" method="GET">
           <div class="form-row">
             <div class="col-md-3 mb-2">
               <label class="sr-only">內容</label>
@@ -269,24 +282,24 @@
               />
             </div>
             <div class="col-md-2 mb-2">
-                <label class="sr-only">service_type</label>
-                <select name="service_type" class="form-control">
+                <label class="sr-only">event_type</label>
+                <select name="event_type" class="form-control">
                   <option selected="true" disabled="disabled">
                     類型(全部)
                   </option>
-                  {% for key,value in service_type_choices %}
-                  <option value='{{ key }}' {% if values.service_type == key %} selected {% endif %}>{{ value }}</option>
+                  {% for key,value in event_type_choices %}
+                  <option value='{{ key }}' {% if values.event_type == key %} selected {% endif %}>{{ value }}</option>
                   {% endfor %}
                 </select>
             </div>
             <div class="col-md-2 mb-2">
-              <label class="sr-only">service_date</label>
-                <select name="service_date" class="form-control">
+                <label class="sr-only">publish_date</label>
+                <select name="publish_date" class="form-control">
                   <option selected="true" disabled="disabled">
-                    服務日期(全部)
+                    發布日期(全部)
                   </option>
-                  {% for key,value in service_date_choices %}
-                  <option value='{{ key }}' {% if values.service_date == key %} selected {% endif %}>{{ value }}</option>
+                  {% for key,value in publish_date_choices %}
+                  <option value='{{ key }}' {% if values.publish_date == key %} selected {% endif %}>{{ value }}</option>
                   {% endfor %}
                 </select>
             </div>
@@ -303,157 +316,86 @@
 </section>
 
 
-<!-- Carousel Styling -->
+<!-- style for flex grid -->
 <style>
-  .events-carousel {
-    position: relative;
-    overflow: hidden;
-    padding: 20px;
-    width: 100%;
-    visibility: visible;
+    /* Override Bootstrap container width for this page */
+  .container {
+    max-width: 90vw !important;
   }
 
-  .carousel-container {
+  .events-grid {
     display: flex;
-    gap: 20px;
-    transition: transform 0.1s linear;
-    cursor: grab;
-    width: 100%;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: flex-start;
+    max-width: 95vw; /* Use more screen width */
+    margin: 0 auto; /* Center the grid */
   }
 
-  .carousel-item {
-    min-width: 350px;
-    max-width: 350px;
-    flex: 0 0 auto;
-    display: block;
+  .grid-item {
+    flex: 0 0 calc(20% - 20px); /* Keep 5 columns but cells are bigger */
   }
 
-  .carousel-prev,
-  .carousel-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background-color: rgba(223, 175, 103, 0.85); /* #DFAF67 with opacity */
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-    color: white;
-    z-index: 10;
-    font-size: 24px;
-    font-weight: 300;
-  }
-
-  .carousel-prev:hover,
-  .carousel-next:hover {
-    background-color: rgba(223, 175, 103, 0.95); /* #DFAF67 with higher opacity */
-    border-color: rgba(255, 255, 255, 1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transform: translateY(-50%) scale(1.05);
-  }
-
-  .carousel-prev {
-    left: 15px;
-  }
-
-  .carousel-next {
-    right: 15px;
-  }
-
-  .carousel-prev::before,
-  .carousel-next::before {
-    display: none;
-  }
-
-  @keyframes textRise {
-    0% {
-      transform: translateY(50px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
+  /* Medium screens */
+  @media (max-width: 992px) {
+    .grid-item {
+      flex: 0 0 calc(33.333% - 17px);
     }
   }
-  
-  .rising-text {
-    animation: textRise 1.5s ease-out forwards;
+
+  /* Small screens */
+  @media (max-width: 768px) {
+    .grid-item {
+      flex: 0 0 calc(50% - 13px);
+    }
   }
 
-  .rising-text[style*="animation-delay"] {
-    opacity: 0;
+  /* Extra small screens */
+  @media (max-width: 576px) {
+    .grid-item {
+      flex: 0 0 100%;
+    }
   }
-
-
-/* Optional: Add a simple animation */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.search-button:focus .search-icon {
-    animation: pulse 1s infinite;  /* Add pulse animation on focus */
-}
 </style>
 
-<!-- Services Carousel Section -->
-<section id="services" class="py-5">
+<!-- Flex Grid Display -->
+<section id="events" class="py-5">
   <div class="container">
-    <div class="events-carousel">
-      <div class="carousel-nav carousel-prev">&lt;</div>
-      <div class="carousel-nav carousel-next">&gt;</div>
-      <div class="carousel-container">
-        {% if services %}
-          {% for service in services %}
-            <div class="carousel-item">
-              <div class="card listing-preview">
-                <div class="card-title">
-                  <h4>{{ service.title|title }}</h4>
-                </div>
-                {% if service.photo_main %}
-                  <img class="card-img-top" src="{{ service.photo_main.url }}" alt="{{ service.title }}" loading="lazy">
-                {% endif %}
-                <div class="card-body">
-                  <hr />
-                  <div class="row text-secondary pb-2">
-                    <div class="col-12">
-                      <i class="fas fa-newspaper"></i> {{ service.description }}
-                    </div>
+    <div class="events-grid">
+      {% if events %}
+        {% for event in events %}
+          <div class="grid-item">
+            <div class="card listing-preview">
+              <div class="card-title">
+                <h4>{{ event.title|title }}</h4>
+              </div>
+              {% if event.photo_main %}
+                <img class="card-img-top" src="{{ event.photo_main.url }}" alt="{{ event.title }}" loading="lazy">
+              {% endif %}
+              <div class="card-body">
+                <hr />
+                <div class="row text-secondary pb-2">
+                  <div class="col-12">
+                    <i class="fas fa-newspaper"></i> {{ event.content|truncatechars:100 }}
                   </div>
-                  <hr />
-                  <div class="row text-secondary pb-2">
-                    <div class="col-12">
-                      <i class="fas fa-clock"></i> {{ service.service_date|chinese_date }}
-                    </div>
-                  </div>
-                  <hr />
-                  <a href="{% url 'service' service.id %}" class="btn btn-primary btn-block">詳細資訊</a>
                 </div>
+                <hr />
+                <div class="row text-secondary pb-2">
+                  <div class="col-12">
+                    <i class="fas fa-clock"></i> {{ event.publish_date|chinese_date }}
+                  </div>
+                </div>
+                <hr />
+                <a href="{% url 'event_detail' event.id %}" class="btn btn-primary btn-block">詳細資訊</a>
               </div>
             </div>
-          {% endfor %}
-        {% else %}
-          <div class="col-md-12">
-            <p>暫時沒有服務</p>
           </div>
-        {% endif %}
-      </div>
+        {% endfor %}
+      {% endif %}
     </div>
   </div>
 </section>
+
 
 <!-- Script for Infinite Carousel -->
 <script>
@@ -463,7 +405,7 @@
     const prevBtn = document.querySelector('.carousel-prev');
     const nextBtn = document.querySelector('.carousel-next');
     
-    // Clone items for infinite scroll
+    // Clone items for infinite scroll (3 sets: before, original, after)
     originalItems.forEach(item => {
       const beforeClone = item.cloneNode(true);
       container.insertBefore(beforeClone, container.firstChild);
@@ -479,7 +421,7 @@
     let currentTranslate = -singleSetWidth;
     let isAnimating = false;
     let autoScrollInterval;
-    let direction = 1;
+    let direction = 1; // 1 for right, -1 for left
     
     // Initial position
     container.style.transform = `translateX(${currentTranslate}px)`;
@@ -488,17 +430,24 @@
       currentTranslate -= speed;
       container.style.transform = `translateX(${currentTranslate}px)`;
 
+      // Check if we need to reset position
       if (currentTranslate <= -(singleSetWidth * 2)) {
+        // Disable transition temporarily
         container.style.transition = 'none';
         currentTranslate += singleSetWidth;
         container.style.transform = `translateX(${currentTranslate}px)`;
+        // Force reflow
         container.offsetHeight;
+        // Re-enable transition
         container.style.transition = 'transform 0.1s linear';
       } else if (currentTranslate >= 0) {
+        // Disable transition temporarily
         container.style.transition = 'none';
         currentTranslate -= singleSetWidth;
         container.style.transform = `translateX(${currentTranslate}px)`;
+        // Force reflow
         container.offsetHeight;
+        // Re-enable transition
         container.style.transition = 'transform 0.1s linear';
       }
     }

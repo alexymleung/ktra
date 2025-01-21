@@ -190,15 +190,129 @@
   
 </style>
 
-<!-- Showcase Section -->
-<section id="showcase-inner" class="text-white">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h1>本會簡介</h1> <!-- Main heading for the showcase -->
+
+<!-- Inner showcase Improvement Styles -->
+<style>
+  #showcase-inner {
+    position: relative;
+    padding: 1rem 0;
+    background: linear-gradient(135deg, #F79880 0%, #DFAF67 50%, #F7B583 100%);
+    overflow: hidden;
+  }
+
+  #showcase-inner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  #showcase-inner .display-5 {
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    margin-bottom: 1rem;
+  }
+
+  #showcase-inner .lead {
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    letter-spacing: 1px;
+  }
+
+  .rising-text {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<!-- Inner showcase Sunrise effect -->
+<style>
+  @keyframes textRise {
+    0% {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .rising-text {
+    animation: textRise 1.5s ease-out forwards;
+  }
+
+  /* Add this to hide the text initially */
+  .rising-text[style*="animation-delay"] {
+    opacity: 0;
+  }
+  
+  #showcase-inner.sunrise-effect {
+    /* position: relative;
+    overflow: hidden;
+    animation: sunrise 10s infinite; */
+    /* background: linear-gradient(to right, #6a11cb, #2575fc); */
+  }
+
+  .search-button {
+    background-color: transparent;  /* Make the background transparent */
+    border: none;                   /* Remove default border */
+    padding: 4px;                     /* Remove default padding */
+    cursor: pointer;                /* Change cursor to pointer */
+}
+
+.search-icon {
+    width: 21px;                    /* Set width of the search icon */
+    height: 28px;                   /* Set height of the search icon */
+    transition: transform 0.3s;    /* Add transition for scaling effect */
+}
+
+.search-button:hover .search-icon {
+    transform: scale(1.2);          /* Scale the icon on hover */
+}
+
+/* Optional: Add a simple animation */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.search-button:focus .search-icon {
+    animation: pulse 1s infinite;  /* Add pulse animation on focus */
+}
+</style>
+
+<!-- showcase section -->
+<section id="showcase-inner" class="text-white py-5 sunrise-effect">
+    <div class="sun"></div>
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-5 rising-text">本會簡介</h1>
+
+        </div>
       </div>
     </div>
-  </div>
 </section>
 
 

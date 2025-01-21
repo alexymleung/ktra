@@ -96,20 +96,21 @@
 
       <!-- Add font size controls here -->
       <ul class="navbar-nav d-flex justify-content-end align-items-center" style="font-size: 1.2rem;">
-        <li class="nav-item mr-3" style="color:white;">
+        <li class="nav-item mr-1" style="color:white;">
           <button id="standardFont" class="nav-link btn btn-secondary">
-            <i class="fas fa-text-size"></i> 中字
+            <img src="{% static 'img/let_small.png' %}" class="logo" style="width:28px; padding: 0px; !important" alt="Logo" />
+            
           </button>
         </li>
-        <li class="nav-item mr-3" style="color:white;">
+        <li class="nav-item mr-2" style="color:white;">
           <button id="largeFont" class="nav-link btn btn-secondary">
-            <i class="fas fa-text-size"></i> 大字
+            <img src="{% static 'img/let_large.png' %}" class="logo" style="width:28px; padding: 0px; !important" alt="Logo" />
           </button>
         </li>     
       </ul>
       
 
-      <!-- USER LOGINOUT RESGISTER DASHBD -->
+        <!-- USER LOGINOUT RESGISTER DASHBD -->
       <ul class="navbar-nav d-flex justify-content-end align-items-center" style="font-size: 1.2rem;">
         {%if user.is_authenticated %}
 

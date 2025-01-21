@@ -14,6 +14,11 @@ def services(request,service_type):
     if service_type:
         queryset_services = queryset_services.filter(service_type__iexact = service_type)
     
+    for sobj in queryset_services:
+        service_bookings = Booking.objects.filter(service=sobj)
+        remind_quota = sobj.quota - len(service_bookings)
+        if remind_quota<1:
+            sobj.no_remind = True
     context = {
         'service_date_choices': service_date_choices,
         'service_type_choices': service_type_choices,
@@ -26,7 +31,7 @@ def service(request,service_id):
     object_service = get_object_or_404(Service,pk=service_id)
     service_bookings = Booking.objects.filter(service=object_service)
     remind_quota = object_service.quota - len(service_bookings)
-    quota_range = range(1,remind_quota)
+    quota_range = range(1,remind_quota+1)
     has_remind = False
     if remind_quota > 0:
         has_remind = True

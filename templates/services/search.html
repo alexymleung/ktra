@@ -44,7 +44,7 @@
 <style>
   #showcase-inner {
     position: relative;
-    padding: 3rem 0;
+    padding: 1rem 0;
     background: linear-gradient(135deg, #F79880 0%, #DFAF67 50%, #F7B583 100%);
     overflow: hidden;
   }
@@ -60,7 +60,7 @@
     pointer-events: none;
   }
 
-  #showcase-inner .display-4 {
+  #showcase-inner .display-5 {
     font-weight: 700;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
     margin-bottom: 1rem;
@@ -87,30 +87,69 @@
   }
 </style>
 
- <!-- Inner showcase Sunrise effect -->
-  <style>
-    @keyframes textRise {
-      0% {
-        transform: translateY(50px);
-        opacity: 0;
-      }
-      100% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-    
-    .rising-text {
-      animation: textRise 1.5s ease-out forwards;
-    }
-  
-    /* Add this to hide the text initially */
-    .rising-text[style*="animation-delay"] {
+<!-- Inner showcase Sunrise effect -->
+<style>
+  @keyframes textRise {
+    0% {
+      transform: translateY(50px);
       opacity: 0;
     }
-    
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .rising-text {
+    animation: textRise 1.5s ease-out forwards;
+  }
 
-  </style>
+  /* Add this to hide the text initially */
+  .rising-text[style*="animation-delay"] {
+    opacity: 0;
+  }
+  
+  #showcase-inner.sunrise-effect {
+    /* position: relative;
+    overflow: hidden;
+    animation: sunrise 10s infinite; */
+    /* background: linear-gradient(to right, #6a11cb, #2575fc); */
+  }
+
+  .search-button {
+    background-color: transparent;  /* Make the background transparent */
+    border: none;                   /* Remove default border */
+    padding: 4px;                     /* Remove default padding */
+    cursor: pointer;                /* Change cursor to pointer */
+  }
+
+  .search-icon {
+    width: 21px;                    /* Set width of the search icon */
+    height: 28px;                   /* Set height of the search icon */
+    transition: transform 0.3s;    /* Add transition for scaling effect */
+  }
+
+  .search-button:hover .search-icon {
+    transform: scale(1.2);          /* Scale the icon on hover */
+  }
+
+  /* Optional: Add a simple animation */
+  @keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+  }
+
+  .search-button:focus .search-icon {
+    animation: pulse 1s infinite;  /* Add pulse animation on focus */
+  }
+</style>
 
   <!-- showcase section -->
   <section id="showcase-inner" class="text-white py-5 sunrise-effect">

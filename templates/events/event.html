@@ -82,20 +82,20 @@
     border: none;                   /* Remove default border */
     padding: 4px;                     /* Remove default padding */
     cursor: pointer;                /* Change cursor to pointer */
-}
+  }
 
-.search-icon {
+  .search-icon {
     width: 21px;                    /* Set width of the search icon */
     height: 28px;                   /* Set height of the search icon */
     transition: transform 0.3s;    /* Add transition for scaling effect */
-}
+  }
 
-.search-button:hover .search-icon {
+  .search-button:hover .search-icon {
     transform: scale(1.2);          /* Scale the icon on hover */
-}
+  }
 
-/* Optional: Add a simple animation */
-@keyframes pulse {
+  /* Optional: Add a simple animation */
+  @keyframes pulse {
     0% {
         transform: scale(1);
     }
@@ -105,28 +105,12 @@
     100% {
         transform: scale(1);
     }
-}
+  }
 
-.search-button:focus .search-icon {
+  .search-button:focus .search-icon {
     animation: pulse 1s infinite;  /* Add pulse animation on focus */
-}
+  }
 </style>
-
-<!-- showcase section -->
-<section id="showcase-inner" class="text-white py-5 sunrise-effect">
-    <div class="sun"></div>
-    <div class="container">
-      <div class="row text-center">
-        <div class="col-md-12">
-          <h1 class="display-5 rising-text">{{ event.title | title }}</h1>
-
-        </div>
-      </div>
-    </div>
-</section>
-
-
-
 
 <!-- general styles -->
 <style>
@@ -281,6 +265,20 @@
     cursor: pointer;
   }
 </style>
+
+<!-- showcase section -->
+<section id="showcase-inner" class="text-white py-5 sunrise-effect">
+    <div class="sun"></div>
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-5 rising-text">{{ event.title | title }}</h1>
+
+        </div>
+      </div>
+    </div>
+</section>
+
 
 <!-- display event details -->
 <div style="display: none;">

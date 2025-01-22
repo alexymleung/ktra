@@ -16,7 +16,7 @@ class AutoLogoutMiddleware(MiddlewareMixin):
             if last_activity:
                 last_activity = datetime.strptime(last_activity, "%Y-%m-%d %H:%M:%S.%f")
                 elapsed_time = (now - last_activity).seconds
-                if elapsed_time > 30:
+                if elapsed_time > 3000:
                     messages.success(request,"您已30秒無活動,請重新登入!")
                     logout(request)
             # Update the last activity timestamp

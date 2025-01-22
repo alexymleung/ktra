@@ -20,7 +20,7 @@ Login
 
             <!-- Login Form -->
             <form action={% url 'login' %} method = "POST">
-              {%csrf_token%}
+              {% csrf_token %}
               <!-- from user db -->
               <!-- username input -->
               <div class="form-group">

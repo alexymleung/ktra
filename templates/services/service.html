@@ -223,6 +223,24 @@
     font-size: 14px;
   }
 
+  .enroll-button {
+    background: linear-gradient(45deg, #F79880, #DFAF67);
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .enroll-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    color: white;
+  }
+
   /* Modal styles */
   .modal {
     display: none;
@@ -376,11 +394,11 @@
                 <span class="detail-value">{{service.instructor }}</span>
               </div>
               {% if user.is_authenticated %}
-              <button type="button" class="enroll-button mt-4" data-toggle="modal" data-target="#signUpModal">
+              <button type="button" class="enroll-button mt-4 text-center" data-toggle="modal" data-target="#signUpModal">
                 立即報名
               </button>
               {% else %}
-              <a type="button" class="enroll-button mt-4" href="{% url 'login' %}">
+              <a type="button" class="enroll-button mt-4 text-center" href="{% url 'login' %}">
                 立即報名
               </a>
               {% endif %}

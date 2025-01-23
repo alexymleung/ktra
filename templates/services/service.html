@@ -150,8 +150,9 @@
   .slideshow-container {
     position: relative;
     max-width: 800px;
-    margin: auto;
+    /* margin: auto; */
     margin-bottom: 40px;
+    height: 500px; /* Explicit height */
   }
 
   .slide {
@@ -223,24 +224,6 @@
     font-size: 14px;
   }
 
-  .enroll-button {
-    background: linear-gradient(45deg, #F79880, #DFAF67);
-    color: white;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 25px;
-    font-weight: bold;
-    transition: transform 0.3s, box-shadow 0.3s;
-    margin-top: 20px;
-    width: 100%;
-  }
-
-  .enroll-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    color: white;
-  }
-
   /* Modal styles */
   .modal {
     display: none;
@@ -299,11 +282,18 @@
 
 <!-- detail descriptions style -->
 <style>
+  .d-flex.flex-column.flex-lg-row.gap-4 {
+    align-items: flex-start;
+    justify-content: space-between;
+  }
   .service-details-card {
     border: none;
     box-shadow: 0 8px 24px rgba(0,0,0,0.1);
     border-radius: 16px;
     transition: transform 0.3s ease;
+    height: 500px; /* Match the height of the slideshow */
+    overflow-y: auto; /* Add scrolling if content is too long */
+    margin-bottom: 40px; /* Match slideshow container's margin */
   }
   
   .service-details-card:hover {
@@ -358,6 +348,25 @@
     -webkit-text-fill-color: transparent;
     font-size: 1.5rem;
   }
+
+  .enroll-button {
+    background: linear-gradient(45deg, #F79880, #DFAF67);
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .enroll-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    color: white;
+  }
+
 </style>
 
 <!-- Service Details -->
@@ -366,10 +375,10 @@
     <a href="{% url 'services' service.service_type %}" class="btn btn-light mb-4">返回服務</a>
 
 
-    <div class="d-flex flex-column flex-lg-row gap-4">
+    <div class="d-flex flex-column flex-lg-row gap-4 align-items-start">
 
       <!-- Details and Enrolment -->
-      <div class="col-lg-5 col-sm-12 mb-5 mr-3 pb-5">
+      <div class="col-lg-5 col-sm-12 mb-5 mr-4 pb-5">
         <div class="d-flex justify-content-center">
           <div class="card w-100 service-details-card">
             <div class="card-body">
@@ -394,11 +403,11 @@
                 <span class="detail-value">{{service.instructor }}</span>
               </div>
               {% if user.is_authenticated %}
-              <button type="button" class="enroll-button mt-4 text-center" data-toggle="modal" data-target="#signUpModal">
+              <button type="button" class="enroll-button mt-4" data-toggle="modal" data-target="#signUpModal">
                 立即報名
               </button>
               {% else %}
-              <a type="button" class="enroll-button mt-4 text-center" href="{% url 'login' %}">
+              <a type="button" class="enroll-button mt-4" href="{% url 'login' %}">
                 立即報名
               </a>
               {% endif %}

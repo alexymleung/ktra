@@ -33,12 +33,8 @@ ALLOWED_HOSTS = [
     'localhost',
 ]
 
-# Data Transfer Configuration
-DATA_TRANSFER_VALID_EXTENSIONS = ['.json']  # Supported file extensions
-DATA_TRANSFER_MAX_SIZE = 10485760  # 10MB maximum file size
-DATA_TRANSFER_LOG_FILE = 'data_transfer.log'
-
 # Application definition
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

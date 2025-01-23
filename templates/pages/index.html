@@ -18,7 +18,7 @@
 
   /* Hero Section */
   .hero {
-      background: url({% static "img/background/00_465045-Kwun-Tong-Promenade.avif" %}) no-repeat center center/cover;
+      background: url({{ hero.img.url }}) no-repeat center center/cover;
       background-size: cover;
       background-position: center bottom;
       height: 83vh;
@@ -459,66 +459,11 @@
         <div class="gallery-container">
             <button class="gallery-nav prev">&#10094;</button>
             <div class="gallery">
-                <div class="gallery-item" data-src="{% static 'img/background/00_465045-Kwun-Tong-Promenade.avif' %}">
-                    <img src="{% static 'img/background/00_465045-Kwun-Tong-Promenade.avif' %}" alt="觀塘海濱長廊">
+                {% for img in indexImages %}
+                <div class="gallery-item" data-src="{{ img.img.url }}">
+                    <img src="{{ img.img.url }}" alt="{{ img.img.name }}">
                 </div>
-                <div class="gallery-item" data-src="{% static 'img/background/01_464426-Kwun-Tong.avif' %}">
-                    <img src="{% static 'img/background/01_464426-Kwun-Tong.avif' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/02_465042-Kwun-Tong-Promenade.avif' %}">
-                    <img src="{% static 'img/background/02_465042-Kwun-Tong-Promenade.avif' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/03_465050-Kwun-Tong-Promenade.webp' %}">
-                    <img src="{% static 'img/background/03_465050-Kwun-Tong-Promenade.webp' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/04_465044-Kwun-Tong-Promenade.webp' %}">
-                    <img src="{% static 'img/background/04_465044-Kwun-Tong-Promenade.webp' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/05_465043-Kwun-Tong-Promenade.avif' %}">
-                    <img src="{% static 'img/background/05_465043-Kwun-Tong-Promenade.avif' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/06_465049-Kwun-Tong-Promenade.avif' %}">
-                    <img src="{% static 'img/background/06_465049-Kwun-Tong-Promenade.avif' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/07_465048-Kwun-Tong-Promenade.avif' %}">
-                    <img src="{% static 'img/background/07_465048-Kwun-Tong-Promenade.avif' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/08_465051-Kwun-Tong-Promenade.webp' %}">
-                    <img src="{% static 'img/background/08_465051-Kwun-Tong-Promenade.webp' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/09_464428-Kwun-Tong.avif' %}">
-                    <img src="{% static 'img/background/09_464428-Kwun-Tong.avif' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/10_465047-Kwun-Tong-Promenade.avif' %}">
-                    <img src="{% static 'img/background/10_465047-Kwun-Tong-Promenade.avif' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/14_465046-Kwun-Tong-Promenade.avif' %}">
-                    <img src="{% static 'img/background/14_465046-Kwun-Tong-Promenade.avif' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/15_464427-Kwun-Tong.webp' %}">
-                    <img src="{% static 'img/background/15_464427-Kwun-Tong.webp' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/18_464424-Kwun-Tong.webp' %}">
-                    <img src="{% static 'img/background/18_464424-Kwun-Tong.webp' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/19_464427-Kwun-Tong.webp' %}">
-                    <img src="{% static 'img/background/19_464427-Kwun-Tong.webp' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/20_26825-Hong-Kong.avif' %}">
-                    <img src="{% static 'img/background/20_26825-Hong-Kong.avif' %}" alt="香港">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/30_464427-Kwun-Tong.webp' %}">
-                    <img src="{% static 'img/background/30_464427-Kwun-Tong.webp' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/34_fa2b5196acce54cbc579f.jpg' %}">
-                    <img src="{% static 'img/background/34_fa2b5196acce54cbc579f.jpg' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/35_fa2b5196acce54cbc579f.jpg' %}">
-                    <img src="{% static 'img/background/35_fa2b5196acce54cbc579f.jpg' %}" alt="觀塘海濱長廊">
-                </div>
-                <div class="gallery-item" data-src="{% static 'img/background/40_464427-Kwun-Tong.webp' %}">
-                    <img src="{% static 'img/background/40_464427-Kwun-Tong.webp' %}" alt="觀塘海濱長廊">
-                </div>
+                {% endfor %}
             </div>
             <button class="gallery-nav next">&#10095;</button>
         </div>

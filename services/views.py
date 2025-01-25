@@ -72,14 +72,14 @@ def search(request):
         if service_type and service_type != '_':
             queryset_list = queryset_list.filter(service_type__iexact=service_type)
 
-    paginator = Paginator(queryset_list, 3)
-    page = request.GET.get("page")
-    paged_listings = paginator.get_page(page)
+    # paginator = Paginator(queryset_list, 30)
+    # page = request.GET.get("page")
+    # paged_listings = paginator.get_page(page)
     
     context = {
         'service_date_choices': service_date_choices,
         'service_type_choices': service_type_choices,  # Pass event type choices to the template
-        'services': paged_listings,
+        'services': queryset_list,
         'values': request.GET
     }
     return render(request, 'services/search.html', context)

@@ -351,6 +351,7 @@
 
   .enroll-button {
     background: linear-gradient(45deg, #F79880, #DFAF67);
+    text-align: center;
     color: white;
     border: none;
     padding: 10px 30px;
@@ -407,7 +408,7 @@
                 立即報名
               </button>
               {% else %}
-              <a type="button" class="enroll-button mt-4" href="{% url 'login' %}">
+              <a type="button" class="enroll-button mt-4" href="{% url 'login' %}?next={{ request.path }}&message=請先登入以報名活動">
                 立即報名
               </a>
               {% endif %}

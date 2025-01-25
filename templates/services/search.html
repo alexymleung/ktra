@@ -37,7 +37,6 @@
       color: white !important;
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
     }
-
 </style>
 
 <!-- Inner showcase Improvement Styles -->
@@ -108,14 +107,23 @@
   .rising-text[style*="animation-delay"] {
     opacity: 0;
   }
-  
-  #showcase-inner.sunrise-effect {
-    /* position: relative;
-    overflow: hidden;
-    animation: sunrise 10s infinite; */
-    /* background: linear-gradient(to right, #6a11cb, #2575fc); */
-  }
+</style>
 
+<!-- showcase section -->
+<section id="showcase-inner" class="text-white py-5 sunrise-effect">
+  <div class="sun"></div>
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h1 class="display-4 rising-text">{{ service_type|get_service_label }}服務搜尋</h1>
+        <p class="lead rising-text" style="animation-delay: 0.5s;">最新服務資訊</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Search Button Styles -->
+<style>
   .search-button {
     background-color: transparent;  /* Make the background transparent */
     border: none;                   /* Remove default border */
@@ -148,57 +156,6 @@
 
   .search-button:focus .search-icon {
     animation: pulse 1s infinite;  /* Add pulse animation on focus */
-  }
-</style>
-
-  <!-- showcase section -->
-  <section id="showcase-inner" class="text-white py-5 sunrise-effect">
-    <div class="sun"></div>
-    <div class="container">
-      <div class="row text-center">
-        <div class="col-md-12">
-          <h1 class="display-4 rising-text">{{ service_type|get_service_label }}服務搜尋</h1>
-          <p class="lead rising-text" style="animation-delay: 0.5s;">最新服務資訊</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-<!-- Search Button Styles -->
-<style>
-
-  .search-button {
-      background-color: transparent;  /* Make the background transparent */
-      border: none;                   /* Remove default border */
-      padding: 0;                     /* Remove default padding */
-      cursor: pointer;                /* Change cursor to pointer */
-  }
-  
-  .search-icon {
-      width: 30px;                    /* Set width of the search icon */
-      height: 40px;                   /* Set height of the search icon */
-      transition: transform 0.3s;    /* Add transition for scaling effect */
-  }
-  
-  .search-button:hover .search-icon {
-      transform: scale(1.2);          /* Scale the icon on hover */
-  }
-  
-  /* Optional: Add a simple animation */
-  @keyframes pulse {
-      0% {
-          transform: scale(1);
-      }
-      50% {
-          transform: scale(1.1);
-      }
-      100% {
-          transform: scale(1);
-      }
-  }
-  
-  .search-button:focus .search-icon {
-      animation: pulse 1s infinite;  /* Add pulse animation on focus */
   }
 </style>
 
@@ -337,7 +294,6 @@
 </section>
 
 
-
 <!-- Services Carousel Styling -->
 <style>
   /* Add these new styles */
@@ -408,7 +364,6 @@
   }
 </style>
 
-
 <!-- Services Carousel Section -->
 <section id="services" class="py-5">
   <div class="container">
@@ -454,26 +409,7 @@
 
 <!-- Script for Infinite Carousel -->
 <script>
-  let page = 1;
-  const servicesContainer = document.getElementById('services');
-  
-  window.addserviceListener('scroll', () => {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-      page++;
-      fetch(`/services/?page=${page}`)
-        .then(response => response.text())
-        .then(html => {
-          servicesContainer.insertAdjacentHTML('beforeend', html);
-        });
-    }
-  });
-  
-</script>
-    
-
-<!-- Script for Infinite Carousel -->
-<script>
-  document.addserviceListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function() {
     const container = document.querySelector('.carousel-container');
     const originalItems = Array.from(document.querySelectorAll('.carousel-item'));
     const prevBtn = document.querySelector('.carousel-prev');
@@ -536,21 +472,21 @@
     }
 
     // Button controls
-    prevBtn.addserviceListener('mousedown', () => {
+    prevBtn.addEventListener('mousedown', () => {
       isAnimating = true;
       direction = -1;
       if (autoScrollInterval) clearInterval(autoScrollInterval);
       autoScrollInterval = setInterval(() => moveCarousel(-2), 20);
     });
 
-    nextBtn.addserviceListener('mousedown', () => {
+    nextBtn.addEventListener('mousedown', () => {
       isAnimating = true;
       direction = 1;
       if (autoScrollInterval) clearInterval(autoScrollInterval);
       autoScrollInterval = setInterval(() => moveCarousel(2), 20);
     });
 
-    document.addserviceListener('mouseup', () => {
+    document.addEventListener('mouseup', () => {
       if (isAnimating) {
         isAnimating = false;
         if (autoScrollInterval) clearInterval(autoScrollInterval);
@@ -559,7 +495,7 @@
     });
 
     // Hover effects
-    prevBtn.addserviceListener('mouseenter', () => {
+    prevBtn.addEventListener('mouseenter', () => {
       if (!isAnimating) {
         direction = -1;
         if (autoScrollInterval) clearInterval(autoScrollInterval);
@@ -567,7 +503,7 @@
       }
     });
 
-    nextBtn.addserviceListener('mouseenter', () => {
+    nextBtn.addEventListener('mouseenter', () => {
       if (!isAnimating) {
         direction = 1;
         if (autoScrollInterval) clearInterval(autoScrollInterval);
@@ -575,7 +511,7 @@
       }
     });
 
-    prevBtn.addserviceListener('mouseleave', () => {
+    prevBtn.addEventListener('mouseleave', () => {
       if (!isAnimating) {
         direction = 1;
         if (autoScrollInterval) clearInterval(autoScrollInterval);
@@ -583,7 +519,7 @@
       }
     });
 
-    nextBtn.addserviceListener('mouseleave', () => {
+    nextBtn.addEventListener('mouseleave', () => {
       if (!isAnimating) {
         direction = 1;
         if (autoScrollInterval) clearInterval(autoScrollInterval);
@@ -596,10 +532,30 @@
   });
 </script>
 
+
 <!-- Bottom Spacer -->
 <div class="row">
   <div class="container1 col-md-6 col-sm-12"></div>
   <div class="container1 col-md-6 col-sm-12"></div> 
 </div>
+
+
+<!-- Script for Infinite Carousel -->
+<!-- <script>
+  let page = 1;
+  const servicesContainer = document.getElementById('services');
+  
+  window.addEventListener('scroll', () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+      page++;
+      fetch(`/services/?page=${page}`)
+        .then(response => response.text())
+        .then(html => {
+          servicesContainer.insertAdjacentHTML('beforeend', html);
+        });
+    }
+  });
+</script> -->
+
 
 {% endblock %}

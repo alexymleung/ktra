@@ -40,6 +40,8 @@ def register(request):
         return render(request, 'accounts/register.html')
 
 def login(request):
+    if request.GET.get('message'):
+        messages.warning(request, request.GET.get('message'))
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
